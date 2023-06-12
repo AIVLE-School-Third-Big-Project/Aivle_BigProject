@@ -1,9 +1,10 @@
 # login views
 
 import json, re, bcrypt
+
 from django.views import View
 from django.shortcuts import render, redirect
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 
 from . import models
 
@@ -28,13 +29,15 @@ class loginView(View) :
             user_pw = user.pw.encode('utf-8')
             
             if not bcrypt.checkpw(pw, user_pw) : # 비밀번호 오류
-                return JsonResponse({"messgae" : "INVALID_PASSWORD"}, status = 400)
+                return JsonResponse({"message" : "INVALID_PASSWORD"}, status = 400)
             
-            return redirect('/main/')
+            if 'user' not in request.session :
+                request.session['user'] = id # 세션 추가
+            return JsonResponse({"redirect_url" : "/main/"}, status = 201)
             
         # 입력 오류 => 하나 이상 비어있을 경우  
         except KeyError :
-            return JsonResponse({"message" : "KEY_EROOR"}, status = 400)
+            return JsonResponse({"message" : "KEY_ERROR"}, status = 400)
         
         # id가 테이블 존재 X
         except models.User.DoesNotExist :

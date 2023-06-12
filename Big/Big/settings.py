@@ -13,7 +13,7 @@ SECRET_KEY = "django-insecure-mh=_xfbdr^)6@lr9_!209!mrm4mrs5-3!gtrmnjs%*z-eqd_u$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','desktop-l657ddq']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -28,7 +28,9 @@ INSTALLED_APPS = [
     
     # Big Project Apps
     "django_extensions",
-    "apps.login.apps.LoginConfig",
+    "apps.login.apps.LoginConfig", # login
+    "apps.workLog.apps.WorklogConfig", # workLog
+    "apps.sessionManagement.apps.SessionmanagementConfig" # sessionManagement
 ]
 
 MIDDLEWARE = [
@@ -38,6 +40,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    
+    # Big Project MiddleWare
+    'apps.sessionManagement.views.CheckSessionExpiryMiddleware', # 세션 매니저
 ] #"django.middleware.csrf.CsrfViewMiddleware",
 
 ROOT_URLCONF = "Big.urls"
@@ -109,11 +114,13 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# 빅프로젝트 설정
-# 정적파일 --------------------------------------------
+# 빅프로젝트 설정 --------------------------------------------
+# 정적파일 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [ # 정적파일 폴더경로 지정
-    os.path.join(BASE_DIR, 'Big/static/'), ]
+    os.path.join(BASE_DIR, 'static\\'), ]
 
-# 정적 파일 검색기 static 폴더의 파일이 STATICFILES_DIRS 경로의 파일보다 우선적으로 사용
-STATICFILES_FINDERS = ['django.contrib.staticfiles.finders.FileSystemFinder',] 
+# 세션
+SESSION_COOKIE_AGE = 5  # 1시간 => (60분 x 60초)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True # 웹 브라우저 종료 시, 세션 자동 만료
+CHECK_INTERVAL = 10 # 세션 검사 시간
