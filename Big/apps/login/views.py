@@ -2,14 +2,16 @@
 
 import json, re, bcrypt
 from django.views import View
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 
 from . import models
 
+# 로그인 화면
 def index(request) :
     return render(request, 'login/login.html')
 
+# 회원가입 화면
 def register(request) :
     return render(request, 'login/register.html')
     
@@ -28,7 +30,7 @@ class loginView(View) :
             if not bcrypt.checkpw(pw, user_pw) : # 비밀번호 오류
                 return JsonResponse({"messgae" : "INVALID_PASSWORD"}, status = 400)
             
-            return JsonResponse({"messgae" : "SUCCESS"}, status = 201)
+            return redirect('/main/')
             
         # 입력 오류 => 하나 이상 비어있을 경우  
         except KeyError :
