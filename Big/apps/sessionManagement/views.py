@@ -7,9 +7,9 @@ class CheckSessionExpiryMiddleware:
 
     def __call__(self, request):
         
-        # 세션 만료 + 로그인/로그인검사 URL이 아닐 때
-        if 'user' not in request.session and request.path != '/' \
-            and request.path != '/login/submit/' :
+        # 세션 만료 + 로그인/로그인검사/회원가입/회원가입검사 URL이 아닐 때
+        if 'user' not in request.session and \
+            request.path not in ['/', '/login/submit/', '/register/', '/register/submit/', '/register/id_inspection/'] :
             
             return render(request, 'session/sessionAlert.html')  # 세션 만료 시 로그인 화면으로 이동
 
