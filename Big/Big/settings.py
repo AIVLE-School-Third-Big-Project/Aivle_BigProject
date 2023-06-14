@@ -107,7 +107,8 @@ TIME_ZONE = "Asia/Seoul"
 
 USE_I18N = True
 
-USE_TZ = True
+# USE_TZ = True
+USE_TZ = False # 로컬 시간을 저장
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -121,6 +122,6 @@ STATICFILES_DIRS = [ # 정적파일 폴더경로 지정
     os.path.join(BASE_DIR, 'static\\'), ]
 
 # 세션
-SESSION_COOKIE_AGE = 5  # 1시간 => (60분 x 60초)
+SESSION_COOKIE_AGE = 3600  # 1시간 => (60분 x 60초)
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True # 웹 브라우저 종료 시, 세션 자동 만료
 CHECK_INTERVAL = 10 # 세션 검사 시간

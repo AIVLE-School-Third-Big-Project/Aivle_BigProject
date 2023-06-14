@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Work Log Write Form</title>
+
+    {% load static %}
+    <script src = "{% static 'workLog/js/workLogWrite.js'%}"></script>
+</head>
+<body>
+    <h1>Work Log Write Form</h1>
+    <form id = "work-log-wirte-form" method="POST" action = "request/">
+        {% csrf_token %}
+        
+        <label for="day">Day:</label>
+        <input type="date" id="day" name="day" required><br><br>
+        
+        <label for="in_time">In Time:</label>
+        <input type="datetime-local" id="in_time" name="in_time" required><br><br>
+        
+        <label for="out_time">Out Time:</label>
+        <input type="datetime-local" id="out_time" name="out_time" required><br><br>
+        
+        <label for="start">Start:</label>
+        <input type="date" id="start" name="start" required><br><br>
+        
+        <label for="end">End:</label>
+        <input type="date" id="end" name="end" required><br><br>
+        
+        <label for="work_type">Work Type:</label>
+        <input type="text" id="work_type" name="work_type" required><br><br>
+        
+        <label for="contents">Contents:</label>
+        <input type="text" id="contents" name="contents" required><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
