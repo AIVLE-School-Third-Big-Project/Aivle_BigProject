@@ -50,7 +50,7 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-dark p-0">
                 <a href="/main/" class="navbar-brand">
-                    <h1 class="text-white">AI<span class="text-dark">.</span>Tech</h1>
+                    <h1 class="text-white">AI<span class="text-dark">.</span>VLE</h1>
                 </a>
                 <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
@@ -60,19 +60,23 @@
                     <div class="navbar-nav ms-auto">
                         <a href="/main/" class="nav-item nav-link active">Home</a>
                         <a href="/about/" class="nav-item nav-link">About</a>
-                        <a href="/service/" class="nav-item nav-link">Services</a>
-                        <a href="/project/" class="nav-item nav-link">Projects</a>
+                        <a href="/main/notice/" class="nav-item nav-link">공지사항</a>
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">게시판</a>
                             <div class="dropdown-menu bg-light mt-2">
-                                <a href="/feature/" class="dropdown-item">Features</a>
-                                <a href="/team/" class="dropdown-item">Our Team</a>
-                                <a href="/faq/" class="dropdown-item">FAQs</a>
-                                <a href="/testimonial/" class="dropdown-item">Testimonial</a>
-                                <a href="/404/" class="dropdown-item">404 Page</a>
+                                <a href="/main/workLog/" class="dropdown-item">작업 일지</a>
+                                <a href="/main/videoLog/" class="dropdown-item">영상 로그</a>
                             </div>
                         </div>
-                        <a href="/contact/" class="nav-item nav-link">Contact</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">업로드</a>
+                            <div class="dropdown-menu bg-light mt-2">
+                                <a href="/main/upload/uploadOut/" class="dropdown-item">국사 외부</a>
+                                <a href="/main/upload/uploadIn/" class="dropdown-item">국사 내부</a>
+                                <a href="/main/upload/uploadWork/" class="dropdown-item">작업자 안전</a>
+                            </div>
+                        </div>
+                        <a href="/contact/" class="nav-item nav-link">로그아웃</a>
                     </div>
                     <butaton type="button" class="btn text-white p-0 d-none d-lg-block" data-bs-toggle="modal"
                         data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton>
@@ -84,6 +88,61 @@
 {% block body %}
 
 {% endblock %}
+<!-- Footer Start -->
+<div class="bg-dark text-white-50 footer">
+    <div class="" style='background-color: grey'>
+        <div class="container py-1 copyright">
+            <div class="row justify-content-between">
+                <div class="col-md-auto text-center text-md-start">
+                    <div class="footer-menu">
+                        <a href="/about/">이용안내</a>
+                        <a href="/main/notice/">공지사항</a>
+                        <a href="/privacy/">개인정보처리방침</a>
+                        <a href="/main/workLog/">작업일지</a>
+                        <a href="/main/videoLog/">영상로그</a>
+                    </div>
+                </div>
+                <div class="footer-menu col-md-auto text-center text-md-end fs-5" style='background-color: #424242'>
+                    <a href="https://www.gigaeyes.co.kr/">KT Gigaeyes</a>
+                    <a href="https://aivle.kt.co.kr/">AIVLESCHOOL</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container py-4">
+        <div class="row justify-content-between">
+            <div class="col-md-auto text-md-start">
+                <div>
+                    <p class="mb-0">KT AIVLE SCHOOL 전남전북 9반 35조</p>
+                    <p><i class="fa fa-map-marker-alt me-3"></i>광주광역시 북구 신안동 무등로202번길 15
+                </div>
+            </div>
+            <div class="col-md-auto text-md-end">
+                <a href="index.html" class="d-inline-block mb-3">
+                    <h1 class="text-white">AI<span class="text-primary">.</span>Tech</h1>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-md-auto text-md-end">
+                <a href="index.html" class="d-inline-block mb-3">
+                    <h1 class="text-white">AI<span class="text-primary">.</span>Tech</h1>
+                </a>
+            </div>
+            <div class="col-md-auto text-md-start">
+                <div>
+                    <p class="mb-0">KT AIVLE SCHOOL 전남전북 9반 35조</p>
+                    <p><i class="fa fa-map-marker-alt me-3"></i>광주광역시 북구 신안동 무등로202번길 15
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
 <!-- Back to Top -->
 <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top pt-2"><i class="bi bi-arrow-up"></i></a>
 

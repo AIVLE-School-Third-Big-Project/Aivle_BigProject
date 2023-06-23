@@ -1,13 +1,78 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Work Log Form</title>
-</head>
-<body>
-    <h1>Work Log Form</h1>
-    {% csrf_token %}
-    <a href = "write/">작업일지 작성</a>
-    
+{% extends 'base.html'%}
 
-</body>
-</html>
+{% block title %}
+<title>작업 일지</title>
+{% endblock %}
+
+{% block body %}
+{% load static %}
+
+    <!-- Hero Start -->
+    <div class="container-fluid pt-5 bg-primary hero-header">
+        <div class="container pt-5">
+            <div class="row g-5 pt-5">
+                <div class="col-lg-6 align-self-center text-center text-lg-start mb-lg-5">
+                    <h1 class="display-4 text-white mb-4 animated slideInRight">작업 일지</h1>
+                    <p class='text-white'>작업자 출입 일지가 기록되는 장소입니다</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hero End -->
+   
+    <!--class="card" : 게시판 화면-->
+    <div class="card">
+        <!--class="card_header"-->
+        <!--class="card_body"-->
+        <div class="card_body">
+            <!--작업일지 게시판에서 내용 검색-->
+            <input type="search" placeholder="검색어 입력...">
+            <a class="search" href="#">검색</a>
+        <!--class="card_next"-->
+        <div class="card_next">
+        <!--announcement.html = 공지사항.html-->
+            <ul class="select_board">
+                <li><a class="activate" href="">작업일지</a></li>
+                <li><a href="/main/videoLog/">영상로그</a></li>
+            </ul>
+        </div>
+        <!--작업일지 게시판 내용-->
+            <div class="content_box">
+                <div class="check"><input type="checkbox" name=""id=""></div>               
+                <div class="title"><a href="view.html">23.06.15 작업 내용</a></div>
+                <div class="delete"><button>X</button></div>
+            </div>
+            <div class="content_list">
+                <div class="check"><input type="checkbox" name=""id=""></div>
+                <div class="title"><a href="view.html"> 23.06.10 작업내용</a></div>
+                <div class="delete"><button>X</button></div>
+              </div>
+            <div class="content_box">
+                 <div class="check"><input type="checkbox" name=""id=""></div>
+                 <div class="title"><a href="view.html">23.06.05작업내용</a></div>
+                 <div class="delete"><button>X</button></div>
+            </div>
+            <div class="content_box">
+                <div class="check"><input type="checkbox"name=""id=""></div>
+                <div class="title"><a href="view.html">23.06.02 작업내용</a></div>
+                <div class="delete"><button>X</button></div>
+            </div>
+            <ul class="number">
+                <li><a href="#">&lt;</a></li>
+                <li><a href="#"class="active">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">&gt;</a></li>
+            </ul>
+        </div>
+
+        <!--글 작성 class="btn"-->
+        <div class="btn">
+            <a href="write/">글작성</a>
+        </div>
+        <!--nav bar start-->
+            
+    </div>
+
+{% endblock %}

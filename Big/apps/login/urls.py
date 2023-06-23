@@ -12,5 +12,5 @@ urlpatterns = [
     path('register/', views.register, name = 'register'), # 회원가입
     path('register/id_inspection/', views.idInspectionView.as_view(), name = 'register'),
     path('register/submit/', views.registerView.as_view(), name = 'registerView'), # 회원가입 검사
-     
+    path('priv/', views.priv, name='priv')
 ]

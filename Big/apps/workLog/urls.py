@@ -10,4 +10,6 @@ urlpatterns = [
     
     path('write/', views.workLogWrite, name = 'workLogWrite'), # 일지 작성
     path('write/request/', views.workLogWriteView.as_view(), name = 'workLogWriteView'), # 일직 Submit
+
+    path('view/', views.workLogView.as_view(), name = 'workLogView')   
 ]

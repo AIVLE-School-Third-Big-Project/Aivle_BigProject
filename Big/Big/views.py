@@ -5,31 +5,26 @@ from django.shortcuts import render
 def main(request) :
     return render(request, 'index.html')
 
-# menu
+# about
 def about(request) :
     return render(request, 'about.html')
 
-def service(request) :
-    return render(request, 'service.html')
-
+#아직 빈페이지
 def project(request) :
     return render(request, 'project.html')
 
-# pages drop down menu
-def feature(request) :
-    return render(request, 'feature.html')
 
-def team(request) :
-    return render(request, 'team.html')
+# 영상 로그
+def log(request) :
+    return render(request, 'log.html')
 
-def faq(request) :
-    return render(request, 'faq.html')
-
-def testimonial(request) :
-    return render(request, 'testimonial.html')
-
-def NotFound(request) :
-    return render(request, '404.html')
-
+#로그아웃
 def contact(request) :
     return render(request, 'contact.html')
+
+#개인정보처리방침
+def privacy(request) :
+    return render(request, 'privacy.html')
+
+def priv(request) :
+    return render(request, 'priv.html')

@@ -30,6 +30,9 @@ INSTALLED_APPS = [
     "django_extensions",
     "apps.login.apps.LoginConfig", # login
     "apps.workLog.apps.WorklogConfig", # workLog
+    "apps.upload.apps.UploadConfig", # upload
+    "apps.notice.apps.NoticeConfig", # notice
+    "apps.videoLog.apps.VideologConfig", # videoLog
     "apps.sessionManagement.apps.SessionmanagementConfig" # sessionManagement
 ]
 

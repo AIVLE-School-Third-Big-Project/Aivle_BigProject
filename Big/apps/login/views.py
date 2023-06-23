@@ -10,11 +10,19 @@ from . import models
 
 # 로그인 화면
 def index(request) :
-    return render(request, 'login/login.html')
+    if 'user' in request.session :
+        return render(request, 'index.html')
+    
+    else :
+        return render(request, 'login/login.html')
 
 # 회원가입 화면
 def register(request) :
     return render(request, 'login/register.html')
+    
+# 회원가입 화면
+def priv(request) :
+    return render(request, 'login/priv.html')
     
 # id 중복 검사
 class idInspectionView(View) :

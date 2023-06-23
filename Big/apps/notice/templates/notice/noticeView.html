@@ -1,0 +1,65 @@
+{% extends 'base.html'%}
+
+{% block title %}
+<title>공지 사항</title>
+{% endblock %}
+
+{% block body %}
+{% load static %}
+<!-- Hero Start -->
+<div class="container-fluid pt-5 bg-primary hero-header">
+    <div class="container pt-2">
+        <div class="row g-5 pt-5">
+            <div class="col-lg-6 align-self-center text-center text-lg-start mb-lg-5">
+                <h1 class="display-4 text-white mb-4">공지 사항</h1>
+                <p class='text-white'>공지사항을 빠르고 정확하게 안내해드립니다.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Hero End -->
+
+<!-- Notice Start -->
+<div class="board_wrap">
+    <div class="board_view_wrap">
+        <div class="board_view">
+            <div class="title">
+                글 제목이 들어갑니다.
+            </div>
+            <div class="info">
+                <dl>
+                    <dt>번호</dt>
+                    <dd>1</dd>
+                </dl>
+                <dl>
+                    <dt>글쓴이</dt>
+                    <dd>김이름</dd>
+                </dl>
+                <dl>
+                    <dt>작성일</dt>
+                    <dd>2021.1.16</dd>
+                </dl>
+                <dl>
+                    <dt>조회</dt>
+                    <dd>33</dd>
+                </dl>
+            </div>
+            <div class="cont">
+                글 내용이 들어갑니다<br>
+                글 내용이 들어갑니다<br>
+                글 내용이 들어갑니다<br>
+                글 내용이 들어갑니다<br>
+                글 내용이 들어갑니다<br>
+                글 내용이 들어갑니다<br>
+                글 내용이 들어갑니다<br>
+                글 내용이 들어갑니다
+            </div>
+        </div>
+        <div class="bt_wrap">
+            <a href="/main/notice/" class="on">목록</a>
+            <a href="/main/notice/edit/">수정</a>
+        </div>
+    </div>
+</div>
+<!-- Notice End-->
+{% endblock %}

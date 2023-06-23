@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 
 {% block title %}
-<title>About Page</title>
+<title>About</title>
 {% endblock %}
 
 {% block body %}
@@ -12,82 +12,186 @@
             <div class="row g-5 pt-5">
                 <div class="col-lg-6 align-self-center text-center text-lg-start mb-lg-5">
                     <h1 class="display-4 text-white mb-4 animated slideInRight">About Us</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb justify-content-center justify-content-lg-start mb-0">
-                            <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
-                            <li class="breadcrumb-item text-white active" aria-current="page">About Us</li>
-                        </ol>
-                    </nav>
+                    <p class='text-white'> 저희 프로젝트에 대해서 소개합니다</p>
                 </div>
                 <div class="col-lg-6 align-self-end text-center text-lg-end">
-                    <img class="img-fluid" src="{% static 'img/hero-img.png' %}" alt="" style="max-height: 300px;">
+                    <img class="img-fluid" src="img/hero-img.png" alt="" style="max-height: 300px;">
                 </div>
             </div>
         </div>
     </div>
     <!-- Hero End -->
-
-
-    <!-- Full Screen Search Start -->
-    <div class="modal fade" id="searchModal" tabindex="-1">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content" style="background: rgba(20, 24, 62, 0.7);">
-                <div class="modal-header border-0">
-                    <button type="button" class="btn btn-square bg-white btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex align-items-center justify-content-center">
-                    <div class="input-group" style="max-width: 600px;">
-                        <input type="text" class="form-control bg-transparent border-light p-3"
-                            placeholder="Type search keyword">
-                        <button class="btn btn-light px-4"><i class="bi bi-search"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Full Screen Search End -->
-
-
+   
     <!-- About Start -->
-    <div class="container-fluid py-5">
-        <div class="container py-5">
-            <div class="row g-5 align-items-center">
-                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-                    <div class="about-img">
-                        <img class="img-fluid" src="{% static 'img/about-img.jpg' %}">
-                    </div>
-                </div>
-                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                    <div class="btn btn-sm border rounded-pill text-primary px-3 mb-3">About Us</div>
-                    <h1 class="mb-4">We Make Your Business Smarter with Artificial Intelligence</h1>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
-                        amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
-                        clita duo justo et tempor eirmod magna dolore erat amet</p>
-                    <p class="mb-4">Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no
-                        labore lorem sit. Sanctus clita duo justo et tempor.</p>
-                    <div class="row g-3">
-                        <div class="col-sm-6">
-                            <h6 class="mb-3"><i class="fa fa-check text-primary me-2"></i>Award Winning</h6>
-                            <h6 class="mb-0"><i class="fa fa-check text-primary me-2"></i>Professional Staff</h6>
+    <div id="about_c" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#about_c" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#about_c" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#about_c" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <button type="button" data-bs-target="#about_c" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="container-fluid py-5">
+                <div class="container py-5">
+                    <div class="row g-5 align-items-center">
+                        <div class="col-lg-6">
+                            <div class="">
+                                <img class="img-fluid" src="{% static '/img/about_1.png' %}">
+                            </div>
                         </div>
-                        <div class="col-sm-6">
-                            <h6 class="mb-3"><i class="fa fa-check text-primary me-2"></i>24/7 Support</h6>
-                            <h6 class="mb-0"><i class="fa fa-check text-primary me-2"></i>Fair Prices</h6>
+                        <div class="col-lg-6">
+                            <div class="btn btn-sm border rounded-pill text-primary px-3 mb-3">선정 배경</div>
+                            <h1 class="mb-4">선정 배경을 여기다 적자</h1>
+                            <p class="mb-4">현재 무인 서버실, 무인 국사 등 사람이 없는 전기시설들이 늘어나는데, 현재의 감시 시스템은 사람이
+                                직접 CCTV를 보고 감시해야되는 시스템이다. 
+                            </p>
+                            <p class="mb-4">그래서 저희는 CCTV에 AI를 접목하여 확인하는 시스템을 만들어보고자 했습니다.</p>
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <h6 class="mb-3"><i class="fa fa-check text-primary me-2"></i>Award Winning</h6>
+                                    <h6 class="mb-0"><i class="fa fa-check text-primary me-2"></i>Professional Staff</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h6 class="mb-3"><i class="fa fa-check text-primary me-2"></i>24/7 Support</h6>
+                                    <h6 class="mb-0"><i class="fa fa-check text-primary me-2"></i>Fair Prices</h6>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-4">
+                                <a class="btn btn-primary rounded-pill px-4 me-3" href="">Read More</a>
+                                <a class="btn btn-outline-primary btn-square me-3" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-outline-primary btn-square me-3" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-outline-primary btn-square me-3" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-outline-primary btn-square" href=""><i class="fab fa-linkedin-in"></i></a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="d-flex align-items-center mt-4">
-                        <a class="btn btn-primary rounded-pill px-4 me-3" href="">Read More</a>
-                        <a class="btn btn-outline-primary btn-square me-3" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-outline-primary btn-square me-3" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-outline-primary btn-square me-3" href=""><i class="fab fa-instagram"></i></a>
-                        <a class="btn btn-outline-primary btn-square" href=""><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
             </div>
+          </div>
+          <div class="carousel-item">
+            <div class="container-fluid py-5">
+                <div class="container py-5">
+                    <div class="row g-5 align-items-center">
+                        <div class="col-lg-6">
+                            <div class="">
+                                <img class="img-fluid" src="{% static '/img/KT_ANYANG.jpg' %}">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="btn btn-sm border rounded-pill text-primary px-3 mb-3">국사 내부</div>
+                            <h1 class="mb-4">국사 내부의 화재&연기 감지</h1>
+                            <p class="mb-4">국사 내의 센서가 화재발생 경보 신호를 보낼 시, CCTV 영상을 통하여 연기 또는 화재가 발생하는지 감시하여
+                                화재 경보가 오경보인지 제대로 된 경보인지 확인해주는 시스템
+                            </p>
+                            <p class="mb-4">국사 내부를 촬영...</p>
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <h6 class="mb-3"><i class="fa fa-check text-primary me-2"></i>Award Winning</h6>
+                                    <h6 class="mb-0"><i class="fa fa-check text-primary me-2"></i>Professional Staff</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h6 class="mb-3"><i class="fa fa-check text-primary me-2"></i>24/7 Support</h6>
+                                    <h6 class="mb-0"><i class="fa fa-check text-primary me-2"></i>Fair Prices</h6>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-4">
+                                <a class="btn btn-primary rounded-pill px-4 me-3" href="">Read More</a>
+                                <a class="btn btn-outline-primary btn-square me-3" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-outline-primary btn-square me-3" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-outline-primary btn-square me-3" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-outline-primary btn-square" href=""><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="container-fluid py-5">
+                <div class="container py-5">
+                    <div class="row g-5 align-items-center">
+                        <div class="col-lg-6">
+                            <div class="">
+                                <img class="img-fluid" src="{% static '/img/worker.png' %}">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="btn btn-sm border rounded-pill text-primary px-3 mb-3">작업자 안전</div>
+                            <h1 class="mb-4">작업자 안전복장점검, 사고 감시 시스템</h1>
+                            <p class="mb-4">작업자가 점검을 하러 들어왔을 시, 안전모, 안전복, 안전화 등을 제대로 갖추고 들어왔는지 확인하고
+                                미착용시 경고를 발생시켜주는 시스템 
+                            </p>
+                            <p class="mb-4">인명피해가 발생해 작업자가 수 초 이상 움직임이 없을 시, 즉시 신고하여 빠르게 119를 투입할 수 있게 만든다.</p>
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <h6 class="mb-3"><i class="fa fa-check text-primary me-2"></i>Award Winning</h6>
+                                    <h6 class="mb-0"><i class="fa fa-check text-primary me-2"></i>Professional Staff</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h6 class="mb-3"><i class="fa fa-check text-primary me-2"></i>24/7 Support</h6>
+                                    <h6 class="mb-0"><i class="fa fa-check text-primary me-2"></i>Fair Prices</h6>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-4">
+                                <a class="btn btn-primary rounded-pill px-4 me-3" href="">Read More</a>
+                                <a class="btn btn-outline-primary btn-square me-3" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-outline-primary btn-square me-3" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-outline-primary btn-square me-3" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-outline-primary btn-square" href=""><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="container-fluid py-5">
+                <div class="container py-5">
+                    <div class="row g-5 align-items-center">
+                        <div class="col-lg-6">
+                            <div class="about-img">
+                                <img class="img-fluid" src="{% static '/img/security_camera.png' %}">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="btn btn-sm border rounded-pill text-primary px-3 mb-3">국사 외부</div>
+                            <h1 class="mb-4">작업자 방문예정시간 외 침입자 탐지 시스템</h1>
+                            <p class="mb-4">사전 승인된 작업자가 방문이 예정된 시간을 제외하고 침입자가 외부 CCTV에 확인될 시 경고 알림을 보내는 시스템
+                            </p>
+                            <p class="mb-4">국사 외부를 상시 촬영하여..blabla~</p>
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <h6 class="mb-3"><i class="fa fa-check text-primary me-2"></i>Award Winning</h6>
+                                    <h6 class="mb-0"><i class="fa fa-check text-primary me-2"></i>Professional Staff</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h6 class="mb-3"><i class="fa fa-check text-primary me-2"></i>24/7 Support</h6>
+                                    <h6 class="mb-0"><i class="fa fa-check text-primary me-2"></i>Fair Prices</h6>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-4">
+                                <a class="btn btn-primary rounded-pill px-4 me-3" href="">Read More</a>
+                                <a class="btn btn-outline-primary btn-square me-3" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-outline-primary btn-square me-3" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-outline-primary btn-square me-3" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-outline-primary btn-square" href=""><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
         </div>
-    </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#about_c" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#about_c  " data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+    </div>    
     <!-- About End -->
 
 
@@ -96,10 +200,9 @@
         <div class="container pt-5">
             <div class="row g-5">
                 <div class="col-lg-6 align-self-center mb-md-5 pb-md-5 wow fadeIn" data-wow-delay="0.3s">
-                    <div class="btn btn-sm border rounded-pill text-white px-3 mb-3">Why Choose Us</div>
-                    <h1 class="text-white mb-4">We're Best in AI Industry with 10 Years of Experience</h1>
-                    <p class="text-light mb-4">Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed
-                        stet no labore lorem sit. Sanctus clita duo justo et tempor</p>
+                    <div class="btn btn-sm border rounded-pill text-white px-3 mb-3">일단 만들어논 칸</div>
+                    <h1 class="text-white mb-4">여기다 무엇을 적을지 상의</h1>
+                    <p class="text-light mb-4">이런 저런 서비스를 만들고 싶어요</p>
                     <div class="d-flex align-items-center text-white mb-3">
                         <div class="btn-sm-square bg-white text-primary rounded-circle me-3">
                             <i class="fa fa-check"></i>
@@ -140,7 +243,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 align-self-end text-center text-md-end wow fadeIn" data-wow-delay="0.5s">
-                    <img class="img-fluid" src="{% static 'img/feature.png' %}" alt="">
+                    <img class="img-fluid" src="img/feature.png" alt="">
                 </div>
             </div>
         </div>
@@ -151,88 +254,76 @@
     <!-- Team Start -->
     <div class="container-fluid bg-light py-5">
         <div class="container py-5">
-            <div class="row g-5 align-items-center">
-                <div class="col-lg-5 wow fadeIn" data-wow-delay="0.1s">
-                    <div class="btn btn-sm border rounded-pill text-primary px-3 mb-3">Our Team</div>
-                    <h1 class="mb-4">Meet Our Experienced Team Members</h1>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
-                        amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
-                        clita duo justo et tempor eirmod magna dolore erat amet</p>
-                    <a class="btn btn-primary rounded-pill px-4" href="">Read More</a>
-                </div>
-                <div class="col-lg-7">
+        <div class="mx-auto text-center wow fadeIn" data-wow-delay="0.1s" style="max-width: 500px;">
+            <div class="btn btn-sm border rounded-pill text-primary px-3 mb-3">Our Team</div>
+            <h1 class="mb-4">35조 구성원을 소개합니다.</h1>
+            <!--<p class="mb-4">구성원 소개 넣기</p> -->
+        </div>
+        <div class="container py-5">
+            <div>
+                <div class="col-lg-12">
                     <div class="row g-4">
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <div class="row g-4">
                                 <div class="col-12 wow fadeIn" data-wow-delay="0.1s">
                                     <div class="team-item bg-white text-center rounded p-4 pt-0">
-                                        <img class="img-fluid rounded-circle p-4" src="{% static 'img/team-1.jpg' %}" alt="">
-                                        <h5 class="mb-0">Boris Johnson</h5>
-                                        <small>Founder & CEO</small>
-                                        <div class="d-flex justify-content-center mt-3">
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-facebook-f"></i></a>
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-twitter"></i></a>
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-instagram"></i></a>
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-linkedin-in"></i></a>
-                                        </div>
+                                        <img class="img-fluid rounded-circle p-4" src="{% static '/img/illust_1.png' %}" alt="">
+                                        <h5 class="mb-0">이길원</h5>
+                                        <small>조장 & FE</small>
                                     </div>
                                 </div>
-                                <div class="col-12 wow fadeIn" data-wow-delay="0.5s">
+                                <div class="col-12 wow fadeIn" data-wow-delay="0.1s">
                                     <div class="team-item bg-white text-center rounded p-4 pt-0">
-                                        <img class="img-fluid rounded-circle p-4" src="{% static 'img/team-2.jpg' %}" alt="">
-                                        <h5 class="mb-0">Adam Crew</h5>
-                                        <small>Executive Manager</small>
-                                        <div class="d-flex justify-content-center mt-3">
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-facebook-f"></i></a>
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-twitter"></i></a>
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-instagram"></i></a>
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-linkedin-in"></i></a>
-                                        </div>
+                                        <img class="img-fluid rounded-circle p-4" src="{% static '/img/illust_2.png' %}" alt="">
+                                        <h5 class="mb-0">이근섭</h5>
+                                        <small>AI</small>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 pt-md-4">
+                        <div class="col-md-3 pt-md-4">
                             <div class="row g-4">
-                                <div class="col-12 wow fadeIn" data-wow-delay="0.3s">
+                                <div class="col-12 wow fadeIn" data-wow-delay="0.1s">
                                     <div class="team-item bg-white text-center rounded p-4 pt-0">
-                                        <img class="img-fluid rounded-circle p-4" src="{% static 'img/team-3.jpg' %}" alt="">
-                                        <h5 class="mb-0">Kate Winslet</h5>
-                                        <small>Co Founder</small>
-                                        <div class="d-flex justify-content-center mt-3">
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-facebook-f"></i></a>
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-twitter"></i></a>
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-instagram"></i></a>
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-linkedin-in"></i></a>
-                                        </div>
+                                        <img class="img-fluid rounded-circle p-4" src="{% static '/img/illust_3.png' %}" alt="">
+                                        <h5 class="mb-0">김성호</h5>
+                                        <small>FrontEnd</small>
                                     </div>
                                 </div>
-                                <div class="col-12 wow fadeIn" data-wow-delay="0.7s">
+                                <div class="col-12 wow fadeIn" data-wow-delay="0.1s">
                                     <div class="team-item bg-white text-center rounded p-4 pt-0">
-                                        <img class="img-fluid rounded-circle p-4" src="{% static 'img/team-4.jpg' %}" alt="">
-                                        <h5 class="mb-0">Cody Gardner</h5>
-                                        <small>Project Manager</small>
-                                        <div class="d-flex justify-content-center mt-3">
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-facebook-f"></i></a>
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-twitter"></i></a>
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-instagram"></i></a>
-                                            <a class="btn btn-square btn-primary m-1" href=""><i
-                                                    class="fab fa-linkedin-in"></i></a>
+                                        <img class="img-fluid rounded-circle p-4" src="{% static '/img/illust_4.png' %}"alt="">
+                                        <h5 class="mb-0">이현빈</h5>
+                                        <small>FrontEnd</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="row g-4">
+                                <div class="col-12 wow fadeIn" data-wow-delay="0.1s">
+                                    <div class="team-item bg-white text-center rounded p-4 pt-0">
+                                        <img class="img-fluid rounded-circle p-4" src="{% static '/img/illust_5.png' %}" alt="">
+                                        <h5 class="mb-0">김유민</h5>
+                                        <small>BackEnd</small>
+                                    </div>
+                                </div>
+                                <div class="col-12 wow fadeIn" data-wow-delay="0.1s">
+                                    <div class="team-item bg-white text-center rounded p-4 pt-0">
+                                        <img class="img-fluid rounded-circle p-4" src="{% static '/img/illust_6.png' %}" alt="">
+                                        <h5 class="mb-0">정재훈</h5>
+                                        <small>BackEnd</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 pt-md-4">
+                            <div class="row g-4">
+                                <div class="col-12 wow fadeIn" data-wow-delay="0.1s">
+                                    <div class="team-item bg-white text-center rounded p-4 pt-0">
+                                        <img class="img-fluid rounded-circle p-4" src="{% static '/img/illust_7.png' %}" alt="">
+                                        <h5 class="mb-0">박준우</h5>
+                                        <small>FrontEnd</small>
                                         </div>
                                     </div>
                                 </div>
@@ -245,98 +336,4 @@
     </div>
     <!-- Team End -->
 
-
-    <!-- Newsletter Start -->
-    <div class="container-fluid bg-primary newsletter py-5">
-        <div class="container">
-            <div class="row g-5 align-items-center">
-                <div class="col-md-5 ps-lg-0 pt-5 pt-md-0 text-start wow fadeIn" data-wow-delay="0.3s">
-                    <img class="img-fluid" src="{% static 'img/newsletter.png' %}" alt="">
-                </div>
-                <div class="col-md-7 py-5 newsletter-text wow fadeIn" data-wow-delay="0.5s">
-                    <div class="btn btn-sm border rounded-pill text-white px-3 mb-3">Newsletter</div>
-                    <h1 class="text-white mb-4">Let's subscribe the newsletter</h1>
-                    <div class="position-relative w-100 mt-3 mb-2">
-                        <input class="form-control border-0 rounded-pill w-100 ps-4 pe-5" type="text"
-                            placeholder="Enter Your Email" style="height: 48px;">
-                        <button type="button" class="btn shadow-none position-absolute top-0 end-0 mt-1 me-2"><i
-                                class="fa fa-paper-plane text-primary fs-4"></i></button>
-                    </div>
-                    <small class="text-white-50">Diam sed sed dolor stet amet eirmod</small>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Newsletter End -->
-
-
-    <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-white-50 footer pt-5">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-                    <a href="index.html" class="d-inline-block mb-3">
-                        <h1 class="text-white">AI<span class="text-primary">.</span>Tech</h1>
-                    </a>
-                    <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
-                        amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
-                        clita duo justo et tempor</p>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
-                    <h5 class="text-white mb-4">Get In Touch</h5>
-                    <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-instagram"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
-                    <h5 class="text-white mb-4">Popular Link</h5>
-                    <a class="btn btn-link" href="">About Us</a>
-                    <a class="btn btn-link" href="">Contact Us</a>
-                    <a class="btn btn-link" href="">Privacy Policy</a>
-                    <a class="btn btn-link" href="">Terms & Condition</a>
-                    <a class="btn btn-link" href="">Career</a>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
-                    <h5 class="text-white mb-4">Our Services</h5>
-                    <a class="btn btn-link" href="">Robotic Automation</a>
-                    <a class="btn btn-link" href="">Machine learning</a>
-                    <a class="btn btn-link" href="">Predictive Analysis</a>
-                    <a class="btn btn-link" href="">Data Science</a>
-                    <a class="btn btn-link" href="">Robot Technology</a>
-                </div>
-            </div>
-        </div>
-        <div class="container wow fadeIn" data-wow-delay="0.1s">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved.
-
-                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a href="">Home</a>
-                            <a href="">Cookies</a>
-                            <a href="">Help</a>
-                            <a href="">FAQs</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Footer End -->
-
-
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top pt-2"><i class="bi bi-arrow-up"></i></a>
 {% endblock %}

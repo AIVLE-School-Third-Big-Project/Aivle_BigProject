@@ -5,16 +5,38 @@
 
     {% load static %}
     <script src="{% static 'login/js/login.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'login/css/login.css' %}">
 </head>
 <body>
-    <h1>로그인</h1>
-    <form id="login-form">
-        <label for="id">아이디:</label>
-        <input type="text" id="id" name="id" required><br>
-        <label for="pw">비밀번호:</label>
-        <input type="password" id="pw" name="pw" required><br>
-        <input type="submit" value="로그인">
-    </form>
-    <a href = "register/">회원가입</a>
+    
+    <div id="form-container">
+        <div id="form-inner-container">
+          <div id="sign-up-container">
+            <h3>환영합니다.</h3>
+            <form id='login-form'>
+              <label for="name">아이디</label>
+              <input type="text" name="id" id="id" placeholder="ID" required>
+    
+              <label for="password">패스워드</label>
+              <input type="password" name="pw" id="pw" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" required>
+              <div class="g-recaptcha" data-sitekey="6LdWGZcmAAAAAMgQJ0M6MjYfRckBhUBpWeUAP90j"></div>
+              <div id="form-controls">
+                <button type="submit">로그인</button>
+                <button type="button"><a href='/priv'>가입</a></button>
+              </div>
+              <input type="checkbox" name="terms" id="terms" style="display: none;">
+              <label for="terms" style="display: none;">I agree to the <a href="#" class="termsLink">Terms of service</a> and <a href="#" class="termsLink">Privacy Policy</a>.</label>
+            </form>
+          </div>
+    
+          <!-- Lottie animation -->
+          <div id="animation-container">
+            <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_0gfEPCHLKZ.json"  background="transparent"  speed="1"  style="width: 400px; height: 400px;" loop autoplay></lottie-player>
+          </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="{% static 'login/js/login_view.js' %}"></script>
 </body>
 </html>

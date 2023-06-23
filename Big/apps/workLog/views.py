@@ -6,11 +6,13 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from . import models
 
+
 def workLog(request) : # 작업 일지 Html
     return render(request, 'workLog/workLog.html')
 
 def workLogWrite(request) : # 작업 일지 작성 Html
     return render(request, 'workLog/workLogWrite.html')
+
 
 class workLogView(View) : # 작업 일지 요청
     def get(self, request) :

@@ -12,16 +12,27 @@ urlpatterns = [
     path('main/', views.main, name = 'main'),
     path('main/workLog/',include('apps.workLog.urls')),
     
-    # menu
+    #about
     path('about/', views.about, name = 'about'),
-    path('service/', views.service, name = 'about'),
+    
+    #공지
+    path('main/notice/', include('apps.notice.urls')),
+    
+    #빈페이지
     path('project/', views.project, name = 'about'),
     
     # pages drop down menu
-    path('feature/', views.feature, name = 'about'),
-    path('team/', views.team, name = 'team'),
-    path('faq/', views.faq, name = 'faq'),
-    path('testimonial/', views.testimonial, name = 'testimonial'),
-    path('404/', views.NotFound, name = '404'),
+    # 영상로그
+    path('main/videoLog/', include('apps.videoLog.urls')),
+    
+    # upload drop down menu
+    path('main/upload/', include('apps.upload.urls')),
+    
+    # 로그아웃
     path('contact/', views.contact, name = 'contact'),
+    
+    #개인정보처리방침
+    path('privacy/', views.privacy, name = 'privacy'),
+    path('priv/', views.priv, name = 'priv'),
+    
 ]
