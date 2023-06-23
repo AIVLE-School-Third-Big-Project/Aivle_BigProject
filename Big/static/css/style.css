@@ -219,7 +219,7 @@ a {
     width: 10%;
 }
 
-.board_list .count {
+.board_list .approved {
     width: 10%;
 }
 
@@ -483,7 +483,7 @@ a {
 .card_body a.search{
     padding : 10px 15px 10px 15px;
     margin-left: 10px;
-    background-color : tomato;
+    background-color : #1363c6;
     color : #fff;
 }
 .card_body div {

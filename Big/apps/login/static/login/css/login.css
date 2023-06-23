@@ -14,6 +14,8 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: url(../../../../../static/img/bg-hero.png) center center no-repeat;
+    background-size: cover;
 }
 
 #form-inner-container {
@@ -87,7 +89,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #1363c6;
+    background-color: #15ACE1;
 }
 
 button[type="button"] {

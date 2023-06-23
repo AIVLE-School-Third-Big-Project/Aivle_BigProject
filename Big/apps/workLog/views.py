@@ -1,51 +1,95 @@
 # workLog views
 
 import json
-from django.views import View
-from django.shortcuts import render
-from django.http import JsonResponse
+from django.core.paginator import Paginator
+from django.shortcuts import render, redirect
+from datetime import datetime
 from . import models
+from apps.login.models import User
 
 
 def workLog(request) : # 작업 일지 Html
-    return render(request, 'workLog/workLog.html')
+    boards = models.WorkLog.objects.all()  # 데이터베이스에서 게시판 데이터 조회
+    role = User.objects.get(id=request.session['user']).category
+
+    # 페이징 설정
+    paginator = Paginator(boards, 10)  # 한 페이지에 10개의 게시물이 보이도록 설정
+    page_number = request.GET.get('page')  # 현재 페이지 번호를 가져옴
+    page_obj = paginator.get_page(page_number)  # 현재 페이지에 해당하는 게시물들을 가져옴
+
+    context = {
+        'page_obj': page_obj,
+        'role': role,
+    }
+    
+    print(context)
+    return render(request, 'workLog/workLog.html', context)
 
 def workLogWrite(request) : # 작업 일지 작성 Html
     return render(request, 'workLog/workLogWrite.html')
 
+def workLogWriteSubmit(request) : # 작업 일지 작성 로직
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        user_id = request.session['user'] # 세션
+        in_time = request.POST.get('in_time')
+        out_time = request.POST.get('out_time')
+        start = request.POST.get('start')
+        end = request.POST.get('end')
+        work_type = request.POST.get('work_type')
+        contents = request.POST.get('contents')
+        region = User.objects.get(id = user_id).region # 유저 지역
 
-class workLogView(View) : # 작업 일지 요청
-    def get(self, request) :
-        work_log_data = models.WorkLog.objects.all() # 작업 일지 테이블 전부 로드
-        json_data = json.dumps(list(work_log_data.values())) # Json 객체로 변환
-        
-        # json 객체로 Response
-        return JsonResponse(json_data, status = 201, safe=False) # list -> safe = False
+        # WorkLog 모델에 데이터 저장
+        worklog = models.WorkLog(
+            title=title,
+            day = datetime.now().strftime('%Y-%m-%d'),
+            user_id = user_id,
+            in_time=in_time,
+            out_time=out_time,
+            start=start,
+            end=end,
+            work_type=work_type,
+            contents=contents,
+            region = region
+        )
+        worklog.save()
+
+        # 저장 후 작업 완료 페이지로 이동
+        return redirect('/main/workLog/')
     
-class workLogWriteView(View) : # 작업 일지 작성
-    def post(self, request) :
-        work_data = json.loads(request.body) # 폼 데이터
-        user_id = request.session['user'] # 세션 ID
+    
+def workLogView(request, board_id) :
+        board = models.WorkLog.objects.get(pk=board_id)
+        role = User.objects.get(id=request.session['user']).category
+
+        context = {
+            'board': board,
+            'role': role
+        }
         
-        try :
-            models.WorkLog.objects.create( # 테이블에 insert
-                user_id     =user_id,
-                day         =work_data['day'],
-                in_time     =work_data['in_time'],
-                out_time    =work_data['out_time'],
-                start       =work_data['start'],
-                end         =work_data['end'],
-                work_type   =work_data['work_type'],
-                contents =  work_data['contents']
-            )
-            
-            return JsonResponse({'message' : 'SUCCESS'}, status = 201)
+        return render(request, 'workLog/workLogView.html', context)
+    
+def workLogSearch(request) :
+    keyword = request.GET.get('keyword', '')  # 'keyword' 매개변수 값 가져오기 (기본값은 빈 문자열)
+    role = User.objects.get(id=request.session['user']).category
+    page_obj = models.WorkLog.objects.filter(title__icontains=keyword)
+
+
+    context = {
+        'page_obj': page_obj, 
+        'role': role
+    }
+    return render(request, 'workLog/workLog.html', context)
+
+def workLogApprove(request, board_id) : # 관리자 승인 요청
+    try:
+        board = models.WorkLog.objects.get(board_id=int(board_id))
+        board.approved = True
+        board.save()
+    except models.WorkLog.DoesNotExist:
+        return render(request, 'workLog/DoesNotExist.html') 
+    
+    return redirect('/main/workLog/view/'+board_id+'/')
+    
         
-        except json.JSONDecodeError :
-            return JsonResponse({"message" : "JSON_DECODE_ERROR"}, status = 400)
-        
-        except TypeError :  # 잘못된 유형의 값을 필드에 할당
-            return JsonResponse({"message" : "TYPE_ERROR"}, status = 400)
-        
-        except ValueError : # 부적절한 값을 인자로 
-            return JsonResponse({"message" : "VALUE_ERROR"}, status = 400)

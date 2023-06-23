@@ -1,1 +1,84 @@
-<p>workLogview</p>
+{% extends 'base.html'%}
+
+{% block title %}
+<title>작업 일지</title>
+{% endblock %}
+
+{% block body %}
+{% load static %}
+<!-- Hero Start -->
+<div class="container-fluid pt-5 bg-primary hero-header">
+    <div class="container pt-2">
+        <div class="row g-5 pt-5">
+            <div class="col-lg-6 align-self-center text-center text-lg-start mb-lg-5">
+                <h1 class="display-4 text-white mb-4">작업 일지</h1>
+                <p class='text-white'>작업자 출입 일지가 기록되는 장소입니다.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Hero End -->
+
+<!-- workLogView Start -->
+<div class="board_wrap">
+    <div class="board_view_wrap">
+        <div class="board_view">
+            <div class="title">
+                {{board.title}}
+            </div>
+            <div class="info">
+                <dl>
+                    <dt>글쓴이</dt>
+                    <dd>{{board.user_id}}</dd>
+                </dl>
+                <dl>
+                    <dt>작성일</dt>
+                    <dd>{{board.day}}</dd>
+                </dl>
+                <dl>
+                    <dt>작업 시작 날짜</dt>
+                    <dd>{{board.start}}</dd>
+                </dl>
+                <dl>
+                    <dt>작업 종료 날짜</dt>
+                    <dd>{{board.end}}</dd>
+                </dl>
+                <dl>
+                    <dt>금일 작업 시작 시간</dt>
+                    <dd>{{board.in_time|time:"H:i:s"}}</dd>
+                </dl>
+                <dl>
+                    <dt>금일 작업 종료 시간</dt>
+                    <dd>{{board.out_time|time:"H:i:s"}}</dd>
+                </dl>
+                <dl>
+                    <dt>승인 여부</dt>
+                    <dd>
+                        {% if role == "관리자" %}
+                            {% if board.approved %}
+                                승인됨
+                            {% else %}
+                                <a class="btn btn-primary" href="/main/workLog/approve/{{board.board_id}}">승인</a>
+                            {% endif %}
+                        {% else %}
+                            {% if board.approved %}
+                                승인
+                            {% else %}
+                                대기 중
+                            {% endif %}
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div>
+            <div class="cont">
+                {{board.contents}}
+            </div>
+        </div>
+        <div class="bt_wrap">
+            <a href="/main/workLog/" class="on">목록</a>
+            <a href="/main/workLog/edit/">수정</a>
+        </div>
+    </div>
+</div>
+<!-- workLogView End-->
+{% endblock %}

@@ -7,9 +7,8 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
-        <link href="{% static 'css/priv_css.css' %}" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>        
-        <script type="text/javascript" src="../board/priv.js"></script>
+        <link href="{% static 'login/css/priv_css.css' %}" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     </head>
     <div class="form">
         <!--check All JavaScript-->
@@ -463,7 +462,6 @@
                         </ol>
                     </div>
                 </div>
-                <li class="read_more"><a href="../board/개인정보처리동의서.pdf">자세히 보기</a></li>
             <!-- 이용약관 End-->
                 <!--개인정보 수집 동의 Start-->
             <li class="checkBox check03">
@@ -536,7 +534,7 @@
                         </ol>
                     </div>
                 </div>
-                <li class="read_more"><a href="../board/고유식별정보처리 동의서.pdf">자세히 보기</a></li>
+                <li class="read_more"><a href="{% static 'pdf/개인정보처리동의서.pdf' %}">자세히 보기</a></li>
             </li>
             <!-- 개인정보 수집 동의 End-->
             <!-- 다음 약관 Start-->
@@ -631,6 +629,7 @@
                         </ol>
                     </div>
                 </div>
+                <li class="read_more"><a href="{% static 'pdf/고유식별정보처리 동의서.pdf' %}">자세히 보기</a></li>
             </li>
             <!--약관 End-->
             <!--약관 Start-->
@@ -643,10 +642,46 @@
                 </ul>
             </li>
         </ul>
-        <ul class="footBtwrap clearfix">
-            <li><button class="BT1">비동의</button></li>
-            <li><button type="button" onclick="location.href='/register/'" class="BT2">동의</button></li>
+        <ul class="footBtwrap">
+            <button type="button" onclick="location.href='/'" class="BT1">비동의</button>
+            <button type="button" onclick="location.href='/register/'" class="BT3" id ="agree" disabled>동의</button>
         </ul>
     </form>
+     <!--Essential form is_checked JavaScript Start-->
+
+     <script>
+        const essential_all = document.getElementById("chkAll");
+        const essential01 = document.getElementById("chk1");
+        const essential02 = document.getElementById("chk2");
+        const essential03 = document.getElementById("chk3");
+        const button = document.getElementById('agree');
+
+        function handleCheckBoxChange(){
+            if (essential01.checked && essential02.checked && essential03.checked){
+                button.disabled = false;
+                button.classList.remove("BT3");
+                button.classList.add("BT2");
+            } else if (essential_all.checked){
+                button.disabled = false;
+                button.classList.remove("BT3");
+                button.classList.add("BT2");
+
+            }
+            else {
+                button.disabled = true;
+                button.classList.remove("BT2");
+                button.classList.add("BT3");
+            
+            }
+
+        }
+        essential01.addEventListener("change", handleCheckBoxChange);
+        essential02.addEventListener("change", handleCheckBoxChange);
+        essential03.addEventListener("change", handleCheckBoxChange);
+        essential_all.addEventListener("change", handleCheckBoxChange);
+
+    </script>
+
+    <!--Essential form is_checked JavaScript End-->
     </div>
 </html>

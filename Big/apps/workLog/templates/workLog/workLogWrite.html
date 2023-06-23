@@ -6,46 +6,71 @@
 
 {% block body %}
 {% load static %}
-
-    <!-- Hero Start -->
-    <div class="container-fluid pt-5 bg-primary hero-header">
-        <div class="container pt-5">
-            <div class="row g-5 pt-5">
-                <div class="col-lg-6 align-self-center text-center text-lg-start mb-lg-5">
-                    <h1 class="display-4 text-white mb-4 animated slideInRight">작업 일지</h1>
-                    <p class='text-white'>작업자 출입 일지가 기록되는 장소입니다</p>
-                </div>
+<!-- Hero Start -->
+<div class="container-fluid pt-5 bg-primary hero-header">
+    <div class="container pt-2">
+        <div class="row g-5 pt-5">
+            <div class="col-lg-6 align-self-center text-center text-lg-start mb-lg-5">
+                <h1 class="display-4 text-white mb-4">작업 일지</h1>
+                <p class='text-white'>작업자 출입 일지가 기록되는 장소입니다.</p>
             </div>
         </div>
     </div>
-    <!-- Hero End -->
-    <div id ="board_write">
-        <h4>작업일지</h4>
-        <!-- write_area = 게시판 내용 작성 페이지 -->
-        <div id = "write_area">
-            <form enctype="multipart/form-data" action="write_ok.php?board_id=<?echo $board_id;?>" method="post">
-                <div id="in_title">
-                    <textarea name="title" id="utitle" rows="1" cols="55" placeholder="내용" required></textarea>    
+</div>
+<!-- Hero End -->
+<div class="board_wrap">
+    <div class="board_title">
+        <strong>작업 일지 입력</strong>
+    </div>
+    <div class="board_write_wrap">
+        <form action="/main/workLog/write/submit/" id="work-form" method="post">
+            <div class="board_write">
+                <div class="title">
+                    <dl>
+                        <dt>제목</dt>
+                        <dd><input type="text" id="title" name = "title" minlength = "3" placeholder="제목 입력" required></dd>
+                    </dl>
                 </div>
-
-                <div class="wi_line"></div>
-                <div id="in_content">
-                    <textarea name="content" id="ucontent" placeholder="내용" required></textarea>
+                <div class="info">
+                    <dl>
+                        <dt>작업 시작 날짜</dt>
+                        <dd><input type="date" id="start" name="start" required></dd>
+                    </dl>
+                    <dl>
+                        <dt>작업 종료 날짜</dt>
+                        <dd><input type="date" id="end" name="end" required></dd>
+                    </dl>
+                    <dl>
+                        <dt>금일 작업 시작 시간</dt>
+                        <dd><input type="datetime-local" id="in_time" name="in_time" required></dd>
+                    </dl>
+                    <dl>
+                        <dt>금일 작업 종료 시간</dt>
+                        <dd><input type="datetime-local" id="out_time" name="out_time" required></dd>
+                    </dl>
+                    <dl>
+                        <dt>작업 유형</dt>
+                        <dd>
+                            <select id="work_type" name="work_type" required>
+                                <option value="">유형 선택</option>
+                                <option value="maintenance">유지보수 및 점검</option>
+                                <option value="cleaning">청소</option>
+                                <option value="repair">수리</option>
+                            </select>
+                        </dd>
+                    </dl>
                 </div>
-
-                <input type="file" name="SelectFile"  />
-            
-                <div class="bt_se">
-                    <button type="submit">내용 입력</button>
+                <div class="cont">
+                    <textarea id = "contents" name = "contents" placeholder="내용 입력"></textarea>
                 </div>
-                
-                <div class="bt_wrap">
-                    <a href="/main/workLog/view/" class="on">등록</a>
-                    <a href="/main/workLog/">취소</a>
-                </div>
-
-            </form>
+            </div>
+        </form>
+        <div class="bt_wrap">
+            <button type="submit" class="btn btn-dark btn-lg" style="padding-left: 20px; padding-right: 20px;" form="work-form">등록</button>
+            <button class="btn btn-white btn-lg" style="padding-left: 20px; padding-right: 20px;" onclick="window.location.href='/main/workLog/'">취소</button>
         </div>
     </div>
+</div>
 
 {% endblock %}
+

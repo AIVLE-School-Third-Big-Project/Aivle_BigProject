@@ -6,10 +6,10 @@ from . import views
 
 urlpatterns = [
     path('', views.workLog, name = 'workLog'), # 작업 일지
-    path('request/', views.workLogView.as_view(), name = 'workLogView'), # 작업 일지 Load
     
     path('write/', views.workLogWrite, name = 'workLogWrite'), # 일지 작성
-    path('write/request/', views.workLogWriteView.as_view(), name = 'workLogWriteView'), # 일직 Submit
-
-    path('view/', views.workLogView.as_view(), name = 'workLogView')   
+    path('write/submit/', views.workLogWriteSubmit, name = 'workLogWriteSubmit'), # 일지 Submit
+    path('view/<int:board_id>/', views.workLogView, name='workLogView'),   # 게시판 글 클릭 시
+    path('search/', views.workLogSearch, name = 'workLogSearch'), # 게시판 글 검색
+    path('approve/<str:board_id>/',views.workLogApprove, name = 'workLogApprove')
 ]
