@@ -22,7 +22,6 @@ def workLog(request) : # 작업 일지 Html
         'role': role,
     }
     
-    print(context)
     return render(request, 'workLog/workLog.html', context)
 
 def workLogWrite(request) : # 작업 일지 작성 Html
@@ -59,18 +58,21 @@ def workLogWriteSubmit(request) : # 작업 일지 작성 로직
         return redirect('/main/workLog/')
     
     
-def workLogView(request, board_id) :
+def workLogView(request, board_id) : # 게시글 클릭 시
         board = models.WorkLog.objects.get(pk=board_id)
         role = User.objects.get(id=request.session['user']).category
+        login_user = request.session['user']
 
-        context = {
+        context = { 
             'board': board,
-            'role': role
+            'role': role, # 로그인한 유저의 역할
+            'login_user': int(login_user), # 로그인 id
         }
         
         return render(request, 'workLog/workLogView.html', context)
     
-def workLogSearch(request) :
+    
+def workLogSearch(request) : # 작업일지 검색
     keyword = request.GET.get('keyword', '')  # 'keyword' 매개변수 값 가져오기 (기본값은 빈 문자열)
     role = User.objects.get(id=request.session['user']).category
     page_obj = models.WorkLog.objects.filter(title__icontains=keyword)
@@ -82,6 +84,7 @@ def workLogSearch(request) :
     }
     return render(request, 'workLog/workLog.html', context)
 
+
 def workLogApprove(request, board_id) : # 관리자 승인 요청
     try:
         board = models.WorkLog.objects.get(board_id=int(board_id))
@@ -91,5 +94,47 @@ def workLogApprove(request, board_id) : # 관리자 승인 요청
         return render(request, 'workLog/DoesNotExist.html') 
     
     return redirect('/main/workLog/view/'+board_id+'/')
+
+
+def workLogEdit(request, board_id) : # 게시판 수정
+    try:
+        board = models.WorkLog.objects.get(board_id=board_id)
+        context = {
+            'board': board,
+        }
+        
+    except models.WorkLog.DoesNotExist:
+        return render(request, 'workLog/DoesNotExist.html')
+    
+    return render(request, 'workLog/workLogEdit.html', context)
+
+
+def workLogEditSubmit(request, board_id) : # 테이블 수정
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        in_time = request.POST.get('in_time')
+        out_time = request.POST.get('out_time')
+        start = request.POST.get('start')
+        end = request.POST.get('end')
+        work_type = request.POST.get('work_type')
+        contents = request.POST.get('contents')
+  
+        try:
+            board = models.WorkLog.objects.get(board_id=board_id)
+            board.title = title
+            board.day = datetime.now().strftime('%Y-%m-%d')
+            board.in_time = in_time
+            board.out_time = out_time
+            board.start = start
+            board.end = end
+            board.work_type = work_type
+            board.contents = contents
+            board.save()
+            
+            return redirect('/main/workLog/')
+        
+        except models.WorkLog.DoesNotExist:
+            return render(request, 'workLog/DoesNotExist.html') 
+    
     
         

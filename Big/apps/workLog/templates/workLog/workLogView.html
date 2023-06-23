@@ -76,7 +76,9 @@
         </div>
         <div class="bt_wrap">
             <a href="/main/workLog/" class="on">목록</a>
-            <a href="/main/workLog/edit/">수정</a>
+            {% if role == "관리자" or login_user == board.user_id %}
+                <a href="/main/workLog/edit/{{board.board_id}}">수정</a>
+            {% endif %}
         </div>
     </div>
 </div>

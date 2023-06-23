@@ -1,0 +1,75 @@
+{% extends 'base.html'%}
+
+{% block title %}
+<title>작업 일지</title>
+{% endblock %}
+
+{% block body %}
+{% load static %}
+<!-- Hero Start -->
+<div class="container-fluid pt-5 bg-primary hero-header">
+    <div class="container pt-2">
+        <div class="row g-5 pt-5">
+            <div class="col-lg-6 align-self-center text-center text-lg-start mb-lg-5">
+                <h1 class="display-4 text-white mb-4">작업 일지</h1>
+                <p class='text-white'>작업자 출입 일지가 기록되는 장소입니다.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Hero End -->
+<div class="board_wrap">
+    <div class="board_title">
+        <strong>작업 일지 입력</strong>
+    </div>
+    <div class="board_write_wrap">
+        <form action="/main/workLog/edit/{{board.board_id}}/submit/" id="work-form" method="post">
+            <div class="board_write">
+                <div class="title">
+                    <dl>
+                        <dt>제목</dt>
+                        <dd><input type="text" id="title" name = "title" minlength = "3" placeholder="제목 입력" value="{{board.title}}" required></dd>
+                    </dl>
+                </div>
+                <div class="info">
+                    <dl>
+                        <dt>작업 시작 날짜</dt>
+                        <dd><input type="date" id="start" name="start" value="{{board.start|date:'Y-m-d'}}" required></dd>
+                    </dl>
+                    <dl>
+                        <dt>작업 종료 날짜</dt>
+                        <dd><input type="date" id="end" name="end" value ="{{board.end|date:'Y-m-d'}}"required></dd>
+                    </dl>
+                    <dl>
+                        <dt>금일 작업 시작 시간</dt>
+                        <dd><input type="datetime-local" id="in_time" name="in_time" value="{{board.in_time|date:'Y-m-d'}}T{{board.in_time|time:'H:i'}}" required></dd>
+                    </dl>
+                    <dl>
+                        <dt>금일 작업 종료 시간</dt>
+                        <dd><input type="datetime-local" id="out_time" name="out_time" value="{{board.out_time|date:'Y-m-d'}}T{{board.out_time|time:'H:i'}}" required></dd>
+                    </dl>
+                    <dl>
+                        <dt>작업 유형</dt>
+                        <dd>
+                            <select id="work_type" name="work_type" value="{{board.work_type}}"required>
+                                <option value="">유형 선택</option>
+                                <option value="maintenance" {% if board.work_type == 'maintenance' %}selected{% endif %}>유지보수 및 점검</option>
+                                <option value="cleaning" {% if board.work_type == 'cleaning' %}selected{% endif %}>청소</option>
+                                 <option value="repair" {% if board.work_type == 'repair' %}selected{% endif %}>수리</option>
+                            </select>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="cont">
+                    <textarea id = "contents" name = "contents" placeholder="내용 입력">{{board.contents}}</textarea>
+                </div>
+            </div>
+        </form>
+        <div class="bt_wrap">
+            <button type="submit" class="btn btn-dark btn-lg" style="padding-left: 20px; padding-right: 20px;" form="work-form">등록</button>
+            <button class="btn btn-white btn-lg" style="padding-left: 20px; padding-right: 20px;" onclick="window.location.href='/main/workLog/'">취소</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
