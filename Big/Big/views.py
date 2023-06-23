@@ -18,10 +18,6 @@ def project(request) :
 def log(request) :
     return render(request, 'log.html')
 
-#로그아웃
-def contact(request) :
-    return render(request, 'contact.html')
-
 #개인정보처리방침
 def privacy(request) :
     return render(request, 'privacy.html')

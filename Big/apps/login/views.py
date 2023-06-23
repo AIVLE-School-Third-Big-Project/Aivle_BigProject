@@ -15,6 +15,11 @@ def index(request) :
     
     else :
         return render(request, 'login/login.html')
+    
+def logout(request) :
+    del request.session['user'] # 세션 삭제
+    
+    return render(request, 'login/logoutAlert.html')
 
 # 회원가입 화면
 def register(request) :

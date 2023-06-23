@@ -28,9 +28,6 @@ urlpatterns = [
     # upload drop down menu
     path('main/upload/', include('apps.upload.urls')),
     
-    # 로그아웃
-    path('contact/', views.contact, name = 'contact'),
-    
     #개인정보처리방침
     path('privacy/', views.privacy, name = 'privacy'),
     path('priv/', views.priv, name = 'priv'),
