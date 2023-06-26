@@ -25,6 +25,9 @@
         <div class="board_view">
             <div class="title">
                 {{board.title}}
+                {% if role == "관리자" or login_user == board.user_id %}
+                    <button class="btn btn-danger" id="delete-btn" data-board-id="{{ board.board_id }}" >삭제</button>
+                {% endif %} 
             </div>
             <div class="info">
                 <dl>
@@ -83,4 +86,8 @@
     </div>
 </div>
 <!-- workLogView End-->
+{% endblock %}
+{% block js %}
+    {% load static %}
+    <script src = "{% static 'workLog/js/workLogView.js' %}"></script>
 {% endblock %}

@@ -1,11 +1,14 @@
 # workLog views
 
 import json
+from django.http import JsonResponse
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
+from apps.login.models import User
 from datetime import datetime
 from . import models
-from apps.login.models import User
+from django.views import View
 
 
 def workLog(request) : # 작업 일지 Html
@@ -59,19 +62,31 @@ def workLogWriteSubmit(request) : # 작업 일지 작성 로직
     
     
 def workLogView(request, board_id) : # 게시글 클릭 시
-        board = models.WorkLog.objects.get(pk=board_id)
-        role = User.objects.get(id=request.session['user']).category
-        login_user = request.session['user']
+    board = models.WorkLog.objects.get(pk=board_id)
+    role = User.objects.get(id=request.session['user']).category
+    login_user = request.session['user']
 
-        context = { 
-            'board': board,
-            'role': role, # 로그인한 유저의 역할
-            'login_user': int(login_user), # 로그인 id
-        }
+    context = { 
+        'board': board,
+        'role': role, # 로그인한 유저의 역할
+        'login_user': int(login_user), # 로그인 id
+    }
         
-        return render(request, 'workLog/workLogView.html', context)
+    return render(request, 'workLog/workLogView.html', context)
+   
+
+class workLogViewDelete(View): # 게시글 삭제
+    def post(self, request, board_id) :
+        try:
+            board = models.WorkLog.objects.get(pk=board_id)
+            board.delete()
+            
+            return JsonResponse({'message': 'DELETE_SUCCESS'}, status=204)
+        
+        except ObjectDoesNotExist: # 게시글 존재 X
+            return JsonResponse({'message': 'DELETE_FAILED'}, status=404)
     
-    
+        
 def workLogSearch(request) : # 작업일지 검색
     keyword = request.GET.get('keyword', '')  # 'keyword' 매개변수 값 가져오기 (기본값은 빈 문자열)
     role = User.objects.get(id=request.session['user']).category
