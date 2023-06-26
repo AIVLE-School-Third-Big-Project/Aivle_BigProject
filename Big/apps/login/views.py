@@ -55,13 +55,24 @@ class loginView(View) :
             user_pw = user.pw.encode('utf-8')
             user_name = user.name
             
-            if not bcrypt.checkpw(pw, user_pw) : # 비밀번호 오류
-                return JsonResponse({"message" : "INVALID_PASSWORD"}, status = 400)
+            if user.is_account_locked() : # 계정이 잠긴지 확인
+                return JsonResponse({"message" : "ACCOUNT_LOCKED"}, status = 403)
             
-            if 'user' not in request.session and 'username' not in request.session :
-                request.session['user'] = id # 세션 추가
-                request.session['username'] = user_name
-            return JsonResponse({"redirect_url" : "/main/"}, status = 201)
+            else : # 계정이 잠긴게 아니라면
+                if not bcrypt.checkpw(pw, user_pw) : # 비밀번호 오류
+                    user.increment_failed_attempts() # 실패 횟수 추가
+                    
+                    if user.is_account_locked() : # 계정이 잠긴지 확인
+                        return JsonResponse({"message" : "ACCOUNT_LOCKED"}, status = 403)
+                    
+                    return JsonResponse({"message" : "INVALID_PASSWORD", "count" : user.failed_attempts}, status = 403)
+                
+                if 'user' not in request.session and 'username' not in request.session :
+                    request.session['user'] = id # 세션 추가
+                    request.session['username'] = user_name
+                    
+                    user.reset_failed_attempts() # 실패횟수 초기화
+                    return JsonResponse({"redirect_url" : "/main/"}, status = 201)
             
         # 입력 오류 => 하나 이상 비어있을 경우  
         except KeyError :
@@ -69,7 +80,10 @@ class loginView(View) :
         
         # id가 테이블 존재 X
         except models.User.DoesNotExist :
-            return JsonResponse({"message" : "USER_NOT_FOUND"}, status = 400)
+            return JsonResponse({"message" : "USER_NOT_FOUND"}, status = 404)
+        
+        except ValueError:
+            return JsonResponse({"message" : "VALUE_ERROR"}, status = 400)
             
     
 # 회원가입 등록

@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     "apps.upload.apps.UploadConfig", # upload
     "apps.notice.apps.NoticeConfig", # notice
     "apps.videoLog.apps.VideologConfig", # videoLog
-    "apps.sessionManagement.apps.SessionmanagementConfig" # sessionManagement
+    "apps.sessionManagement.apps.SessionmanagementConfig", # sessionManagement
 ]
 
 MIDDLEWARE = [
@@ -122,7 +122,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # 정적파일 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [ # 정적파일 폴더경로 지정
-    os.path.join(BASE_DIR, 'static\\'), ]
+    os.path.join(BASE_DIR, 'static'), ]
 
 # 세션
 SESSION_COOKIE_AGE = 3600  # 1시간 => (60분 x 60초)

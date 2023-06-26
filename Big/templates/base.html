@@ -52,7 +52,7 @@
                 <a href="{% url 'main' %}" class="navbar-brand">
                     <h1 class="text-white">AI<span class="text-dark">.</span>VLE</h1>
                 </a>
-                <a class='text-white'>{{request.session.username}} 님. 안녕하세요</a>
+                <a class="text-white" id="usernameParagraph"> </a><a class='text-white'>&nbsp;님. 안녕하세요.</a>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <a href="{% url 'main' %}" class="nav-item nav-link active">Home</a>
@@ -140,6 +140,20 @@
 <!-- Template Javascript -->
 <script src="{% static 'js/main.js' %}"></script>
 <script src="{% static 'js/csrfToken.js' %}"></script>
+<script>
+    // 세션에 저장된 이름을 가져와 화면에 출력하는 함수
+    function showUsername() {
+        var username = "{{ request.session.username }}";
+        if (username.length > 0) {
+            var maskedUsername = username.slice(0, -1) + "*";
+            document.getElementById('usernameParagraph').innerText = maskedUsername;
+        } else {
+            document.getElementById('usernameParagraph').innerText = "Guest";
+        }
+    }
+    window.onload = showUsername;
+</script>
+
 {% block js %}
 
 {%endblock %}

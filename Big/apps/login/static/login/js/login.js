@@ -18,9 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.setRequestHeader('X-CSRFToken', csrfToken);
 
         xhr.onreadystatechange = function() {
-            console.log(xhr.readyState, xhr.status)
+            // console.log(xhr.readyState, xhr.status)
             if (xhr.readyState === 4) {
-                console.log(xhr.responseText)
+                // console.log(xhr.responseText)
                 var response = JSON.parse(xhr.responseText); // 서버에서 응답한 JSON 파싱
 
                 if (xhr.status === 201) { // 로그인 성공시
@@ -31,16 +31,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 } 
                 
-                else if (xhr.status === 400) { // 로그인 실패시
+                else if (xhr.status >= 400) { // 로그인 실패시
                     console.log("login failed");
 
                     // 오류 경고창
                     if (response.message == 'INVALID_PASSWORD') // 비밀번호 오류
-                        alert("잘못된 패스워드 입니다.")
+                        alert("잘못된 패스워드 입니다.\n" + response.count + "회 실패")
                     else if (response.message == 'KEY_ERROR') 
                         alert("KEY ERROR");
+                    else if (response.message == 'VALUE_ERROR') 
+                        alert("사번은 숫자로 입력해주세요.");
                     else if (response.message == 'USER_NOT_FOUND') // ID가 없을 경우
                         alert("없는 ID 입니다.")
+                    else if (response.message == 'ACCOUNT_LOCKED') // ID가 없을 경우
+                        alert("5회 이상 비밀번호 입력 실패로 계정이 잠겼습니다.\n잠시 후 다시 시도해주세요.")
                     
                 }
             }
