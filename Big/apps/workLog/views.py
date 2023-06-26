@@ -16,6 +16,7 @@ def workLog(request) : # 작업 일지 Html
     role = User.objects.get(id=request.session['user']).category
 
     # 페이징 설정
+    boards = models.WorkLog.objects.order_by('-board_id')  # 작성일 기준으로 내림차순 정렬
     paginator = Paginator(boards, 10)  # 한 페이지에 10개의 게시물이 보이도록 설정
     page_number = request.GET.get('page')  # 현재 페이지 번호를 가져옴
     page_obj = paginator.get_page(page_number)  # 현재 페이지에 해당하는 게시물들을 가져옴

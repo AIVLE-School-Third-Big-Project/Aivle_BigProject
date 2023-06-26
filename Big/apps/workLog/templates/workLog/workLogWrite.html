@@ -23,7 +23,8 @@
         <strong>작업 일지 입력</strong>
     </div>
     <div class="board_write_wrap">
-        <form action="/main/workLog/write/submit/" id="work-form" method="post">
+        <form action="{% url 'workLogWriteSubmit' %}" id="work-form" method="post">
+            {% csrf_token %}
             <div class="board_write">
                 <div class="title">
                     <dl>

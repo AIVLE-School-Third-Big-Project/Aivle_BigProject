@@ -9,11 +9,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // json으로 변환
         var jsonData = JSON.stringify({ "id": id, "pw": pw });
+        var csrfToken = getCookie('csrftoken');
 
         // AJAX
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/login/submit/", true);
         xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader('X-CSRFToken', csrfToken);
 
         xhr.onreadystatechange = function() {
             console.log(xhr.readyState, xhr.status)

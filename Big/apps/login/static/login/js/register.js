@@ -4,19 +4,24 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault(); // 기본 동작 방지
 
         // 폼 데이터 가져오기
+        var name = document.getElementById('name').value;
         var id = document.getElementById('id').value;
         var pw = document.getElementById('pw').value;
         var pwVerify = document.getElementById('pw-verify').value
         var region = document.getElementById('region').value;
         var category = document.getElementById('category').value;
 
+        var csrfToken = getCookie('csrftoken');
+        
         // json으로 변환
-        var jsonData = JSON.stringify({ "id": id, "pw": pw, "pw-verify":pwVerify, "region": region, "category": category });
+        var jsonData = JSON.stringify({"name": name, "id": id, "pw": pw, "pw-verify":pwVerify, 
+                                        "region": region, "category": category });
 
         // AJAX
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/register/submit/", true);
         xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader('X-CSRFToken', csrfToken);
 
         xhr.onreadystatechange = function() {
             // console.log(xhr.readyState, xhr.status)
@@ -57,13 +62,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // 아이디 중복 검사
     function checkIdDuplication() {
         var id = document.getElementById('id').value;
-        
+        var csrfToken = getCookie('csrftoken');
+
         var jsonData = JSON.stringify({ "id": id });
 
         // AJAX
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/register/id_inspection/", true);
         xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader('X-CSRFToken', csrfToken);
+
         xhr.onreadystatechange = function() {
             // console.log(xhr.readyState, xhr.status)
 

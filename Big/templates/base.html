@@ -49,31 +49,31 @@
     <div class="container-fluid sticky-top">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-dark p-0">
-                <a href="/main/" class="navbar-brand">
+                <a href="{% url 'main' %}" class="navbar-brand">
                     <h1 class="text-white">AI<span class="text-dark">.</span>VLE</h1>
                 </a>
-                <a class='text-white'>이길*님. 안녕하세요</a>
+                <a class='text-white'>{{request.session.username}} 님. 안녕하세요</a>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="/main/" class="nav-item nav-link active">Home</a>
-                        <a href="/about/" class="nav-item nav-link">About</a>
-                        <a href="/main/notice/" class="nav-item nav-link">공지사항</a>
+                        <a href="{% url 'main' %}" class="nav-item nav-link active">Home</a>
+                        <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
+                        <a href="{% url 'notice' %}" class="nav-item nav-link">공지사항</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">게시판</a>
                             <div class="dropdown-menu bg-light mt-2">
-                                <a href="/main/workLog/" class="dropdown-item">작업 일지</a>
-                                <a href="/main/videoLog/" class="dropdown-item">영상 로그</a>
+                                <a href="{% url 'workLog' %}" class="dropdown-item">작업 일지</a>
+                                <a href="{% url 'videoLog' %}" class="dropdown-item">영상 로그</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">업로드</a>
                             <div class="dropdown-menu bg-light mt-2">
-                                <a href="/main/upload/uploadOut/" class="dropdown-item">국사 외부</a>
-                                <a href="/main/upload/uploadIn/" class="dropdown-item">국사 내부</a>
-                                <a href="/main/upload/uploadWork/" class="dropdown-item">작업자 안전</a>
+                                <a href="{% url 'uploadOut' %}" class="dropdown-item">국사 외부</a>
+                                <a href="{% url 'uploadIn' %}" class="dropdown-item">국사 내부</a>
+                                <a href="{% url 'uploadWork' %}" class="dropdown-item">작업자 안전</a>
                             </div>
                         </div>
-                        <a href="/logout/" class="nav-item nav-link">로그아웃</a>
+                        <a href="{% url 'logout' %}" class="nav-item nav-link">로그아웃</a>
                     </div>
                     <butaton type="button" class="btn text-white p-0 d-none d-lg-block" data-bs-toggle="modal"
                         data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton>
@@ -139,6 +139,7 @@
 
 <!-- Template Javascript -->
 <script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/csrfToken.js' %}"></script>
 {% block js %}
 
 {%endblock %}

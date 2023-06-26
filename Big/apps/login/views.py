@@ -16,8 +16,9 @@ def index(request) :
     else :
         return render(request, 'login/login.html')
     
-def logout(request) :
-    del request.session['user'] # 세션 삭제
+# 로그 아웃
+def logout(request) : 
+    request.session.clear() # 세션 삭제
     
     return render(request, 'login/logoutAlert.html')
 
@@ -52,12 +53,14 @@ class loginView(View) :
             
             pw = login_data['pw'].encode('utf-8')
             user_pw = user.pw.encode('utf-8')
+            user_name = user.name
             
             if not bcrypt.checkpw(pw, user_pw) : # 비밀번호 오류
                 return JsonResponse({"message" : "INVALID_PASSWORD"}, status = 400)
             
-            if 'user' not in request.session :
+            if 'user' not in request.session and 'username' not in request.session :
                 request.session['user'] = id # 세션 추가
+                request.session['username'] = user_name
             return JsonResponse({"redirect_url" : "/main/"}, status = 201)
             
         # 입력 오류 => 하나 이상 비어있을 경우  
@@ -75,6 +78,7 @@ class registerView(View) :
         try :
             data = json.loads(request.body)
             
+            name = data['name']
             id = data['id']
             pw = data['pw']
             pwVerify = data['pw-verify']
@@ -95,7 +99,7 @@ class registerView(View) :
             pw_crypt = bcrypt.hashpw(pw, bcrypt.gensalt()).decode('utf-8')
             
             # db에 추가
-            models.User.objects.create(id = id, pw = pw_crypt, region = region, category = category)
+            models.User.objects.create(name = name, id = id, pw = pw_crypt, region = region, category = category)
             return JsonResponse({"redirect_url" : "/"}, status = 201)
             
         # 입력 오류 => 하나 이상 비어있을 경우

@@ -11,7 +11,7 @@ urlpatterns = [
     path('write/submit/', views.workLogWriteSubmit, name = 'workLogWriteSubmit'), # 일지 Submit
     
     path('view/<int:board_id>/', views.workLogView, name='workLogView'),   # 게시판 글 클릭 시
-    path('view/delete/<int:board_id>/', views.workLogViewDelete.as_view(), name='workLogView'),   # 게시판 삭제
+    path('view/delete/<int:board_id>/', views.workLogViewDelete.as_view(), name='workLogViewDelete'),   # 게시판 삭제
     path('search/', views.workLogSearch, name = 'workLogSearch'), # 게시판 글 검색
     path('approve/<str:board_id>/', views.workLogApprove, name = 'workLogApprove'), # 일지 승인
     

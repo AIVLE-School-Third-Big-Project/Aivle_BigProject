@@ -32,7 +32,7 @@
             {% for board in page_obj %}
             <div>
                 <div class="num">{{ forloop.counter }}</div>
-                <div class="title"><a href="/main/workLog/view/{{ board.board_id }}/">{{ board.title }}</a></div>
+                <div class="title"><a href="{% url 'workLogView' board_id=board.board_id %}">{{ board.title }}</a></div>
                 <div class="writer">{{ board.user_id }}</div>
                 <div class="date">{{ board.day }}</div>
                 <div class="approved">
@@ -58,12 +58,12 @@
         </div>
         <div class="card_body">
             <!--작업일지 게시판에서 내용 검색-->
-            <form action="/main/workLog/search/" id="search-form" method="get">
+            <form action="{% url 'workLogSearch' %}" id="search-form" method="get">
                 <input id="search"type="search" placeholder="검색어 입력...">
                 <a id="search-link" class="search" href="#">검색</a>
             </form>
             <div class="bt_wrap">
-                <a href="/main/workLog/write/" class="on" style="margin: 10px;">등록</a>
+                <a href="{% url 'workLogWrite' %}" class="on" style="margin: 10px;">등록</a>
             </div>
         </div>
     </div>

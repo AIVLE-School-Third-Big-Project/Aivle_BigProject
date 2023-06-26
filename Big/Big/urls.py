@@ -19,7 +19,7 @@ urlpatterns = [
     path('main/notice/', include('apps.notice.urls')),
     
     #빈페이지
-    path('project/', views.project, name = 'about'),
+    path('project/', views.project, name = 'project'),
     
     # pages drop down menu
     # 영상로그

@@ -61,7 +61,7 @@
                             {% if board.approved %}
                                 승인됨
                             {% else %}
-                                <a class="btn btn-primary" href="/main/workLog/approve/{{board.board_id}}">승인</a>
+                                <a class="btn btn-primary" href="{% url 'workLogApprove' board_id=board.board_id %}">승인</a>
                             {% endif %}
                         {% else %}
                             {% if board.approved %}
@@ -80,9 +80,9 @@
         <div class="bt_wrap">
             <a href="/main/workLog/" class="on">목록</a>
             {% if role == "관리자" or login_user == board.user_id %}
-                <a href="/main/workLog/edit/{{board.board_id}}">수정</a>
+                <a href="{% url 'workLogEdit' board_id=board.board_id %}">수정</a>
             {% endif %}
-        </div>
+        </div>  
     </div>
 </div>
 <!-- workLogView End-->
