@@ -24,3 +24,7 @@ def privacy(request) :
 
 def priv(request) :
     return render(request, 'priv.html')
+
+# 이용약관
+def useAcc(request) :
+    return render(request, 'useAcc.html')

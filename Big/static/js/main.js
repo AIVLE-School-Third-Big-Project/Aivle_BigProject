@@ -63,3 +63,15 @@
     
 })(jQuery);
 
+// 현재 페이지 URL 가져오기
+var currentURL = window.location.href;
+
+// 네비게이션 링크 요소 선택
+var navLinks = document.querySelectorAll('nav a');
+
+// 각 링크를 순회하면서 현재 페이지 URL과 비교
+navLinks.forEach(function(link) {
+  if (link.href === currentURL) {
+    link.classList.add('active');
+  }
+});

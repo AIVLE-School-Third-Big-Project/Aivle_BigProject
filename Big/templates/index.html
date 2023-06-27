@@ -78,7 +78,7 @@
                 <div class="col-lg-4 wow fadeIn" data-wow-delay="0.3s">
                     <div class="case-item position-relative overflow-hidden rounded mb-2">
                         <img class="img-fluid" src="{% static 'img/project-1.jpg' %}" alt="">
-                        <a class="case-overlay text-decoration-none" href="/upload_in/">
+                        <a class="case-overlay text-decoration-none" href="{% url 'uploadIn' %}">
                             <small>국사 내부 관리</small>
                             <h5 class="lh-base text-white mb-3">화재, 연기 감시하는 프로그램
                             </h5>
@@ -89,7 +89,7 @@
                 <div class="col-lg-4 wow fadeIn" data-wow-delay="0.5s">
                     <div class="case-item position-relative overflow-hidden rounded mb-2">
                         <img class="img-fluid" src="{% static 'img/project-2.jpg' %}" alt="">
-                        <a class="case-overlay text-decoration-none" href="/upload_work/">
+                        <a class="case-overlay text-decoration-none" href="{% url 'uploadWork' %}">
                             <small>작업자 안전 체크</small>
                             <h5 class="lh-base text-white mb-3">작업자 안전복장체크, 작업자 사고 확인
                             </h5>
@@ -100,7 +100,7 @@
                 <div class="col-lg-4 wow fadeIn" data-wow-delay="0.7s">
                     <div class="case-item position-relative overflow-hidden rounded mb-2">
                         <img class="img-fluid" src="{% static 'img/project-3.jpg' %}" alt="">
-                        <a class="case-overlay text-decoration-none" href="/upload_out/">
+                        <a class="case-overlay text-decoration-none" href="{% url 'uploadOut' %}">
                             <small>국사 외부 관리</small>
                             <h5 class="lh-base text-white mb-3">사전 승인된 시간 외 침입자 감시 프로그램
                             </h5>

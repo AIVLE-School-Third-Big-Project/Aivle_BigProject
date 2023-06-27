@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var category = document.getElementById('category').value;
 
         var csrfToken = getCookie('csrftoken');
-        
+
         // json으로 변환
         var jsonData = JSON.stringify({"name": name, "id": id, "pw": pw, "pw-verify":pwVerify, 
                                         "region": region, "category": category });
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 } 
                 
-                else if (xhr.status === 400) { // 로그인 실패시
+                else if (xhr.status === 400) { // 회원가입 실패시
                     console.log("register failed");
 
                     // 오류 경고창
@@ -119,11 +119,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (password === passwordVerify) {
             passwordField.style.borderColor = 'blue';
             passwordVerifyField.style.borderColor = 'blue';
+            document.getElementById('pw-error').textContent = '';
         } 
         
         else {
             passwordField.style.borderColor = 'red';
             passwordVerifyField.style.borderColor = 'red';
+            document.getElementById('pw-error').textContent = '비밀번호가 일치하지 않습니다';
         }
     }
+    
 });

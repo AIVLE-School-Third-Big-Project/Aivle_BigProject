@@ -71,14 +71,6 @@ form input:not(:last-of-type) {
     width: 100%;
 }
 
-
-.select-box {
-    /* background-color: #7369AB; */
-    width: 30px;
-    height: 30px;
-
-}
-
 #check-id-btn {
     cursor: pointer;
     border: 1px solid #E5E9F5;
@@ -236,4 +228,10 @@ label[for="terms"] {
         display: inline-block;
         font-size: smaller;
     }
+}
+
+.notification{
+    color:red;
+    font-size: 10px;
+    opacity: 0.85;
 }

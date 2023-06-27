@@ -30,4 +30,7 @@ urlpatterns = [
     
     #개인정보처리방침
     path('privacy/', views.privacy, name = 'privacy'),
+    
+    # 이용약관
+    path('userAcc/', views.useAcc, name = 'useAcc')
 ]

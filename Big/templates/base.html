@@ -34,7 +34,7 @@
     <!-- Template Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
-<body>
+<body class='d-flex flex-column min-vh-100'>
     <!-- Spinner Start -->
     <div id="spinner"
         class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -53,20 +53,21 @@
                     <h1 class="text-white">AI<span class="text-dark">.</span>VLE</h1>
                 </a>
                 <a class="text-white" id="usernameParagraph"> </a><a class='text-white'>&nbsp;님. 안녕하세요.</a>
+
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="{% url 'main' %}" class="nav-item nav-link active">Home</a>
+                        <a href="{% url 'main' %}" class="nav-item nav-link">Home</a>
                         <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
                         <a href="{% url 'notice' %}" class="nav-item nav-link">공지사항</a>
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">게시판</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-auto-close="true" data-bs-toggle="dropdown">게시판</a>
                             <div class="dropdown-menu bg-light mt-2">
                                 <a href="{% url 'workLog' %}" class="dropdown-item">작업 일지</a>
                                 <a href="{% url 'videoLog' %}" class="dropdown-item">영상 로그</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">업로드</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-auto-close="true" data-bs-toggle="dropdown">업로드</a>
                             <div class="dropdown-menu bg-light mt-2">
                                 <a href="{% url 'uploadOut' %}" class="dropdown-item">국사 외부</a>
                                 <a href="{% url 'uploadIn' %}" class="dropdown-item">국사 내부</a>
@@ -75,8 +76,6 @@
                         </div>
                         <a href="{% url 'logout' %}" class="nav-item nav-link">로그아웃</a>
                     </div>
-                    <butaton type="button" class="btn text-white p-0 d-none d-lg-block" data-bs-toggle="modal"
-                        data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton>
                 </div>
             </nav>
         </div>
@@ -86,17 +85,17 @@
 
 {% endblock %}
 <!-- Footer Start -->
-<div class="bg-dark text-white-50 footer">
+<div class="bg-dark text-white-50 footer mt-auto">
     <div class="" style='background-color: grey'>
         <div class="container py-1 copyright">
             <div class="row justify-content-between">
                 <div class="col-md-auto text-center text-md-start">
                     <div class="footer-menu">
-                        <a href="/privacy/">개인정보처리방침</a>
-                        <a href="/use_acc/">이용약관</a>
-                        <a href="/about/">About</a>
-                        <a href="/main/notice/">공지사항</a>
-                        <a href="/main/workLog/">게시판</a>
+                        <a href="{% url 'privacy' %}">개인정보처리방침</a>
+                        <a href="{% url 'useAcc' %}">이용약관</a>
+                        <a href="{% url 'about' %}">About</a>
+                        <a href="{% url 'notice' %}">공지사항</a>
+                        <a href="{% url 'workLog' %}">작업일지</a>
                     </div>
                 </div>
                 <div class="footer-menu col-md-auto text-center text-md-end fs-5" style='background-color: #424242'>

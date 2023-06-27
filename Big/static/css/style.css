@@ -114,7 +114,7 @@ h6,
 }
 
 html {
-    font-size: 10px;
+    font-size: 14px;
 }
 
 ul, li {
@@ -413,7 +413,9 @@ a {
 
 .navbar .navbar-nav .nav-link:hover,
 .navbar .navbar-nav .nav-link.active {
-    color: rgba(255, 255, 255, 1);
+    color: rgba(255, 255, 255, 1);    
+    font-weight: bolder;
+    border-bottom: 3px solid;
 }
 
 .navbar .dropdown-toggle::after {
@@ -439,7 +441,7 @@ a {
 
 @media (min-width: 992px) {
     .navbar .nav-item .dropdown-menu {
-        display: block;
+        display: none;
         border: none;
         margin-top: 0;
         top: 150%;
@@ -453,6 +455,7 @@ a {
         visibility: visible;
         transition: .5s;
         opacity: 1;
+        display: block;
     }
 }
 
@@ -859,9 +862,11 @@ a {
 
 
 /*** Footer ***/
+
 .footer {
     background: url(../img/footer.png) center center no-repeat;
     background-size: contain;
+    position : relative;
 }
 
 .footer .btn.btn-social {
