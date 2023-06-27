@@ -24,40 +24,27 @@
     <div class="board_view_wrap">
         <div class="board_view">
             <div class="title">
-                글 제목이 들어갑니다.
+                {{ post.title }}
             </div>
             <div class="info">
                 <dl>
-                    <dt>번호</dt>
-                    <dd>1</dd>
-                </dl>
-                <dl>
                     <dt>글쓴이</dt>
-                    <dd>김이름</dd>
+                    <dd>{{ post.name}}</dd>
                 </dl>
                 <dl>
                     <dt>작성일</dt>
-                    <dd>2021.1.16</dd>
-                </dl>
-                <dl>
-                    <dt>조회</dt>
-                    <dd>33</dd>
+                    <dd>{{ post.created }}</dd>
                 </dl>
             </div>
             <div class="cont">
-                글 내용이 들어갑니다<br>
-                글 내용이 들어갑니다<br>
-                글 내용이 들어갑니다<br>
-                글 내용이 들어갑니다<br>
-                글 내용이 들어갑니다<br>
-                글 내용이 들어갑니다<br>
-                글 내용이 들어갑니다<br>
-                글 내용이 들어갑니다
+                {{ post.content }}
             </div>
         </div>
         <div class="bt_wrap">
             <a href="/main/notice/" class="on">목록</a>
-            <a href="/main/notice/edit/">수정</a>
+            {% if role == "관리자" %}
+                <a href="{% url 'noticeEdit' post.id %}">수정</a>
+            {% endif %}
         </div>
     </div>
 </div>

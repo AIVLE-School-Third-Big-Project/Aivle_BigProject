@@ -17,47 +17,32 @@
             </div>
         </div>
     </div>
-    <!-- Hero End -->
-    <div class="board_wrap">
-        <div class="board_title">
-            <strong>공지사항</strong>
-            <p>공지사항을 빠르고 정확하게 안내해드립니다.</p>
-        </div>
-        <div class="board_write_wrap">
-            <div class="board_write">
-                <div class="title">
-                    <dl>
-                        <dt>제목</dt>
-                        <dd><input type="text" placeholder="제목 입력" value="글 제목이 들어갑니다"></dd>
-                    </dl>
-                </div>
-                <div class="info">
-                    <dl>
-                        <dt>글쓴이</dt>
-                        <dd><input type="text" placeholder="글쓴이 입력" value="김이름"></dd>
-                    </dl>
-                    <dl>
-                        <dt>비밀번호</dt>
-                        <dd><input type="password" placeholder="비밀번호 입력" value="1234"></dd>
-                    </dl>
-                </div>
-                <div class="cont">
-                    <textarea placeholder="내용 입력">
-                        글 내용이 들어갑니다.
-                        글 내용이 들어갑니다.
-                        글 내용이 들어갑니다.
-                        글 내용이 들어갑니다.
-                        글 내용이 들어갑니다.
-                        글 내용이 들어갑니다.
-                        글 내용이 들어갑니다.
-                        글 내용이 들어갑니다.
-                    </textarea>
+
+<!-- Hero End -->
+<div class="board_wrap">
+    <div class="board_title">
+        <strong>공지 사항 수정</strong>
+        <form id="notice-form" method="POST" action ="/main/notice/edit/{{ post.id }}/">
+            {% csrf_token %} 
+            <div class="board_write_wrap">
+                <div class="board_write">
+                    <div class="title">
+                        <dl>
+                            <dt>제목</dt>
+                            <dd><input type="text" name="title" id="title" value = "{{post.title}}" placeholder="제목 입력"></dd>
+                        </dl>
+                    </div>
+                    <div class="info"></div>
+                    <div class="cont">
+                        <textarea name="content" id="content" placeholder="내용 입력">{{post.content}}</textarea>
+                    </div>
                 </div>
             </div>
             <div class="bt_wrap">
-                <a href="/main/notice/view/" class="on">수정</a>
-                <a href="/main/notice/view/">취소</a>
+                <button id = "notice-write" type="submit" ><a class="on">수정</a></button>
+                <a href="/main/notice/">취소</a>
             </div>
-        </div>
+        </form>
     </div>
+</div>
 {% endblock %}

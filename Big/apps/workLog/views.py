@@ -40,8 +40,10 @@ def workLog(request) : # 작업 일지 Html
     
     return render(request, 'workLog/workLog.html', context)
 
+
 def workLogWrite(request) : # 작업 일지 작성 Html
     return render(request, 'workLog/workLogWrite.html')
+
 
 def workLogWriteSubmit(request) : # 작업 일지 작성 로직
     if request.method == 'POST':
