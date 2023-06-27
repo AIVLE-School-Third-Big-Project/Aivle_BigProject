@@ -1,6 +1,8 @@
 # workLog views
 
-import json
+import json, sys
+import logging
+
 from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
@@ -10,6 +12,16 @@ from datetime import datetime
 from . import models
 from django.views import View
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+file_handler = logging.FileHandler('log/workLog.log')
+file_handler.setLevel(logging.INFO)
+logger.addHandler(file_handler)
+
+console_handler = logging.StreamHandler(sys.stderr)  # stderr로 변경
+console_handler.setLevel(logging.INFO)
+logger.addHandler(console_handler)
 
 def workLog(request) : # 작업 일지 Html
     boards = models.WorkLog.objects.all()  # 데이터베이스에서 게시판 데이터 조회
@@ -58,6 +70,7 @@ def workLogWriteSubmit(request) : # 작업 일지 작성 로직
         )
         worklog.save()
 
+        logger.info(f'게시글 작성 : {request.session["user"]} [{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}]')
         # 저장 후 작업 완료 페이지로 이동
         return redirect('/main/workLog/')
     
@@ -82,6 +95,7 @@ class workLogViewDelete(View): # 게시글 삭제
             board = models.WorkLog.objects.get(pk=board_id)
             board.delete()
             
+            logger.info(f'{board.user_id}의 {board_id} 게시글 삭제 : {request.session["user"]} [{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}]')
             return JsonResponse({'message': 'DELETE_SUCCESS'}, status=204)
         
         except ObjectDoesNotExist: # 게시글 존재 X
@@ -106,6 +120,8 @@ def workLogApprove(request, board_id) : # 관리자 승인 요청
         board = models.WorkLog.objects.get(board_id=int(board_id))
         board.approved = True
         board.save()
+        
+        logger.info(f'{board.user_id}의 {board_id} 작업 승인 : {request.session["user"]} [{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}]')
     except models.WorkLog.DoesNotExist:
         return render(request, 'workLog/DoesNotExist.html') 
     
@@ -147,6 +163,7 @@ def workLogEditSubmit(request, board_id) : # 테이블 수정
             board.contents = contents
             board.save()
             
+            logger.info(f'{board.user_id}의 {board_id} 게시글 수정 : {request.session["user"]} [{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}]')
             return redirect('/main/workLog/')
         
         except models.WorkLog.DoesNotExist:

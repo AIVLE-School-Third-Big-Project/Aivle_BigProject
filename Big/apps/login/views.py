@@ -1,12 +1,29 @@
 # login views
 
-import json, re, bcrypt
+import json, re, bcrypt, sys
+import logging
 
 from django.views import View
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from datetime import datetime
 
 from . import models
+
+# LOG ------------------------------------------------
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+file_handler = logging.FileHandler('log/login.log')
+file_handler.setLevel(logging.INFO)
+logger.addHandler(file_handler)
+
+console_handler = logging.StreamHandler(sys.stderr)  # stderr로 변경
+console_handler.setLevel(logging.INFO)
+logger.addHandler(console_handler)
+
+# LOG ------------------------------------------------
 
 # 로그인 화면
 def index(request) :
@@ -18,6 +35,7 @@ def index(request) :
     
 # 로그 아웃
 def logout(request) : 
+    logger.info(f'로그아웃 : {request.session["user"]} [{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}]')
     request.session.clear() # 세션 삭제
     
     return render(request, 'login/logoutAlert.html')
@@ -56,6 +74,7 @@ class loginView(View) :
             user_name = user.name
             
             if user.is_account_locked() : # 계정이 잠긴지 확인
+                logger.info(f'계정 잠김 : {user.id} [{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}]')
                 return JsonResponse({"message" : "ACCOUNT_LOCKED"}, status = 403)
             
             else : # 계정이 잠긴게 아니라면
@@ -63,6 +82,7 @@ class loginView(View) :
                     user.increment_failed_attempts() # 실패 횟수 추가
                     
                     if user.is_account_locked() : # 계정이 잠긴지 확인
+                        logger.info(f'계정 잠김 : {user.id} [{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}]')
                         return JsonResponse({"message" : "ACCOUNT_LOCKED"}, status = 403)
                     
                     return JsonResponse({"message" : "INVALID_PASSWORD", "count" : user.failed_attempts}, status = 403)
@@ -72,6 +92,7 @@ class loginView(View) :
                     request.session['username'] = user_name
                     
                     user.reset_failed_attempts() # 실패횟수 초기화
+                    logger.info(f'로그인 완료 : {user.id} [{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}]')
                     return JsonResponse({"redirect_url" : "/main/"}, status = 201)
             
         # 입력 오류 => 하나 이상 비어있을 경우  
