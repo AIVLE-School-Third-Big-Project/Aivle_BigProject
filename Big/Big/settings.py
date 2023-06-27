@@ -129,3 +129,11 @@ SESSION_COOKIE_AGE = 3600  # 1시간 => (60분 x 60초)
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True # 웹 브라우저 종료 시, 세션 자동 만료
 CHECK_INTERVAL = 10 # 세션 검사 시간
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
