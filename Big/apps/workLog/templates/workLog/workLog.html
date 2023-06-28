@@ -6,7 +6,7 @@
 
 {% block body %}
 {% load static %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'workLog/css/workLog.css' %}">
 <div class="container-fluid pt-5 bg-primary hero-header">
     <div class="container pt-2">
         <div class="row g-5 pt-5">
@@ -20,6 +20,13 @@
 <!-- Hero End -->
 
 <div class="board_wrap">
+    <div class="menu_bar">
+    <!--announcement.html = 공지사항.html-->
+        <ul class="select_board">
+            <li><a href="/main/workLog/">작업일지</a></li>
+            <li><a class="activate" href="/main/videoLog/">영상로그</a></li>
+        </ul>
+    </div>
     <div class="board_list_wrap">
         <div class="board_list">
             <div class="top">

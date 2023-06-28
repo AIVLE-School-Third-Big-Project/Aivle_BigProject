@@ -1,0 +1,33 @@
+.menu_bar {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.select_board{
+    display: flex;
+    justify-content: space-around;
+    width: 1200px;
+}
+
+.select_board li {
+    list-style: none;
+    width: 40%;
+    padding: 30px;
+}
+
+.select_board li a {
+    display: block;
+    width: 100%;
+    border-radius: 0.6rem;
+    background-color: #F2F3F8;
+    color: rgb(67, 66, 66);
+    font-weight: bold;
+    text-align: center;
+    height: 4.8rem;
+    line-height: 4.8rem;
+}
+
+.select_board li a:hover{
+    background-color: beige;
+}

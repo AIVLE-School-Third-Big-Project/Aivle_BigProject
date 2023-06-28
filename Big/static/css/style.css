@@ -141,7 +141,7 @@ a {
 
 .board_title p {
     margin-top: 5px;
-    font-size: 1.4rem;
+    font-size: 1.0rem;
 }
 
 .bt_wrap {
@@ -157,7 +157,7 @@ a {
     padding: 10px;
     border: 1px solid #000;
     border-radius: 2px;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
 }
 
 .bt_wrap a:first-child {
@@ -191,7 +191,7 @@ a {
     display: inline-block;
     padding: 15px 0;
     text-align: center;
-    font-size: 1.4rem;
+    font-size: 1.0rem;
 }
 
 .board_list > div.top > div {
@@ -248,7 +248,7 @@ a {
 
 .board_page a.num {
     padding-top: 9px;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
 }
 
 .board_page a.num.on {
@@ -306,7 +306,7 @@ a {
 .board_view .info dl dt,
 .board_view .info dl dd {
     display: inline-block;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
 }
 
 .board_view .info dl dt {
@@ -322,7 +322,7 @@ a {
     padding: 15px;
     border-bottom: 1px solid #000;
     line-height: 160%;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
 }
 
 .board_write {
@@ -356,7 +356,7 @@ a {
 .board_write .info dd {
     display: inline-block;
     vertical-align: middle;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
 }
 
 .board_write .title dt,
