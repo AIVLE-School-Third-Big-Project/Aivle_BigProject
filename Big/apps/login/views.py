@@ -15,7 +15,7 @@ from . import models
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-file_handler = logging.FileHandler('log/login.log')
+file_handler = logging.FileHandler('static/adminLog/login.log')
 file_handler.setLevel(logging.INFO)
 logger.addHandler(file_handler)
 

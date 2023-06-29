@@ -128,7 +128,7 @@ a {
 
 .board_wrap {
     width: 1000px;
-    margin: 100px auto;
+    margin: 0px auto;
 }
 
 .board_title {
@@ -440,22 +440,16 @@ a {
 }
 
 @media (min-width: 992px) {
-    .navbar .nav-item .dropdown-menu {
-        display: none;
-        border: none;
-        margin-top: 0;
-        top: 150%;
-        opacity: 0;
-        visibility: hidden;
-        transition: .5s;
-    }
-
     .navbar .nav-item:hover .dropdown-menu {
         top: 100%;
         visibility: visible;
-        transition: .5s;
         opacity: 1;
-        display: block;
+    }
+
+    .dropdown-menu a:hover,
+    .dropdown-menu a:active{
+        color: white;
+        background-color: #1363c6;
     }
 }
 

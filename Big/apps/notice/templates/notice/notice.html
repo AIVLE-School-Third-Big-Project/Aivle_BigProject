@@ -30,7 +30,7 @@
             </div>
             {% for p in page_obj %}
             <div>
-                <div class="num">{{ p.id }}</div>
+                <div class="num">{{ forloop.counter }}</div>
                 <div class="title"><a href="{% url 'noticeView' p.id %}">{{ p.title }}</a></div>
                 <div class="writer">{{ p.name }}</div>
                 <div class="date">{{ p.created }}</div>

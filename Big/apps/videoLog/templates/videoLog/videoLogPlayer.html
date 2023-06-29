@@ -1,0 +1,32 @@
+{% extends 'base.html'%}
+
+{% block title %}
+<title>영상 로그</title>
+{% endblock %}
+
+{% block body %}
+{% load static %}
+
+    <!-- Hero Start -->
+    <div class="container-fluid pt-5 bg-primary hero-header">
+        <div class="container pt-5">
+            <div class="row g-5 pt-5">
+                <div class="col-lg-6 align-self-center text-center text-lg-start mb-lg-5">
+                    <h1 class="display-4 text-white mb-4 animated slideInRight">영상 로그</h1>
+                    <p class='text-white'>업로드한 영상의 영상 로그가 저장됩니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hero End -->
+
+    <p>{{video_path}}</p>
+    <div>
+        {% load static %}
+        <video controls class="viewer">
+            <source src="{% static folder_path %}" type="video/mp4">
+        </video>
+    </div>
+      
+
+{% endblock %}

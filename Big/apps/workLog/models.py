@@ -10,8 +10,8 @@ class WorkLog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE) # Login 테이블 외래키
     day = models.CharField(max_length = 20) # 게시판 등록 날짜
     
-    in_time = models.DateTimeField() # 작업 입장 시간
-    out_time = models.DateTimeField() # 작업 퇴장 시간
+    in_time = models.TimeField() # 작업 입장 시간
+    out_time = models.TimeField() # 작업 퇴장 시간
     
     start = models.DateField() # 작업 시작 날짜
     end = models.DateField() # 작업 죵료 날짜

@@ -15,7 +15,7 @@ from django.views import View
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-file_handler = logging.FileHandler('log/workLog.log')
+file_handler = logging.FileHandler('static/adminLog/workLog.log')
 file_handler.setLevel(logging.INFO)
 logger.addHandler(file_handler)
 
