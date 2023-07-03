@@ -7,9 +7,6 @@ from django.conf import settings
 from . import views
 
 urlpatterns = [
-    path('textLog/', views.videoLog, name='videoLog'),
-    path('textLog/<path:pathes>/', views.videoLog, name='videoLog'),
-    
-    path('mediaLog/', views.videoPlayerLog, name='videoPlayerLog'),
-    path('mediaLog/<path:pathes>/', views.videoPlayerLog, name='videoPlayerLog'),
+    path('videoLog/', views.videoLog, name='videoLog'),
+    path('videoLog/<path:pathes>/', views.videoLog, name='videoLog'),
 ]

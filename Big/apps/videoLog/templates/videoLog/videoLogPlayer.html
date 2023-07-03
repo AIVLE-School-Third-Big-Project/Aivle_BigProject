@@ -19,13 +19,16 @@
         </div>
     </div>
     <!-- Hero End -->
-
-    <p>{{video_path}}</p>
     <div>
         {% load static %}
         <video controls class="viewer">
             <source src="{% static folder_path %}" type="video/mp4">
         </video>
+    </div>
+    <div>
+        {% if content %}
+          <pre>{{ content }}</pre>
+        {% endif %}
     </div>
       
 
