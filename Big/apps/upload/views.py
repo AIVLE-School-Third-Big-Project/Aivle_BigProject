@@ -18,6 +18,10 @@ from moviepy.editor import *
 
 form = VideoForm()
 form_data = { 'form': form }
+error_str = {
+    'title' : '',
+    'content' : '' ,
+}
 
 logging.getLogger().propagate = False
 
@@ -36,15 +40,30 @@ def uploadOutSubmit(request):
        
         try :
             video = request.FILES['files[]'] # 비디오 파일 불러오기
-            base_dir = os.path.dirname(os.path.abspath(__file__)) # 현재 base 위치 지정
-            model_path = os.path.join(base_dir, 'model', 'human.pt') #  model 불러오기 -> 모델은 upload/model/내에 있음!
-            model = YOLO(model_path) # 모델 실행
-            return StreamingHttpResponse(generate_frames_external(video, model), content_type='multipart/x-mixed-replace; boundary=frame')
+            
+            if not video.name.endswith('.mp4'):
+                error_str['title'] = 'Invalid Video Format'
+                error_str['content'] = 'mp4 확장자 영상 파일을 업로드해주세요.'
+                
+                return render(request, 'upload/FileUploadError.html', error_str)
+            
+            else :
+                base_dir = os.path.dirname(os.path.abspath(__file__)) # 현재 base 위치 지정
+                model_path = os.path.join(base_dir, 'model', 'human.pt') #  model 불러오기 -> 모델은 upload/model/내에 있음!
+                model = YOLO(model_path) # 모델 실행
+                return StreamingHttpResponse(generate_frames_external(video, model), content_type='multipart/x-mixed-replace; boundary=frame')
         
         except KeyError :
-            return render(request, 'upload/noFileUpload.html')
+            error_str['title'] = 'No File Upload Error'
+            error_str['content'] = '업로드 할 파일을 선택해주세요.'
+                
+            return render(request, 'upload/FileUploadError.html', error_str)
+        
         except ValueError :
-            return render(request, 'upload/videoValueError.html')
+            error_str['title'] = 'Invalid Video Upload Error'
+            error_str['content'] = '유효하지 않은 영상입니다.'
+            
+            return render(request, 'upload/FileUploadError.html', error_str)
         
     return render(request, 'upload/uploadOut.html')
 
@@ -53,14 +72,30 @@ def uploadInSubmit(request):
     if request.method == 'POST':
         try :
             video = request.FILES['files[]'] # 비디오 파일 불러오기
-            base_dir = os.path.dirname(os.path.abspath(__file__)) # 현재 base 위치 지정
-            model_path = os.path.join(base_dir, 'model', 'fire.pt') #  model 불러오기 -> 모델은 upload/model/내에 있음!
-            model = YOLO(model_path) # 모델 실행
-            return StreamingHttpResponse(generate_frames_internal(video, model), content_type='multipart/x-mixed-replace; boundary=frame')
+            
+            if not video.name.endswith('.mp4'):
+                error_str['title'] = 'Invalid Video Format'
+                error_str['content'] = 'mp4 확장자 영상 파일을 업로드해주세요.'
+                
+                return render(request, 'upload/FileUploadError.html', error_str)
+            
+            else :
+                base_dir = os.path.dirname(os.path.abspath(__file__)) # 현재 base 위치 지정
+                model_path = os.path.join(base_dir, 'model', 'fire.pt') #  model 불러오기 -> 모델은 upload/model/내에 있음!
+                model = YOLO(model_path) # 모델 실행
+                return StreamingHttpResponse(generate_frames_internal(video, model), content_type='multipart/x-mixed-replace; boundary=frame')
+        
         except KeyError :
-            return render(request, 'upload/noFileUpload.html')
+            error_str['title'] = 'No File Upload Error'
+            error_str['content'] = '업로드 할 파일을 선택해주세요.'
+            
+            return render(request, 'upload/FileUploadError.html', error_str)
+        
         except ValueError :
-            return render(request, 'upload/videoValueError.html')
+            error_str['title'] = 'Invalid Video Upload Error'
+            error_str['content'] = '유효하지 않은 영상입니다.'
+            
+            return render(request, 'upload/FileUploadError.html', error_str)
         
     return render(request, 'upload/uploadIn.html')
 
@@ -76,14 +111,30 @@ def uploadWorkSubmit(request):
        
         try :
             video = request.FILES['files[]'] # 비디오 파일 불러오기
-            base_dir = os.path.dirname(os.path.abspath(__file__)) # 현재 base 위치 지정
-            model_path = os.path.join(base_dir, 'model', model_mode) #  model 불러오기 -> 모델은 upload/model/내에 있음!
-            model = YOLO(model_path) # 모델 실행
-            return StreamingHttpResponse(func(video, model), content_type='multipart/x-mixed-replace; boundary=frame')
+            if not video.name.endswith('.mp4'):
+                error_str['title'] = 'Invalid Video Format'
+                error_str['content'] = 'mp4 확장자 영상 파일을 업로드해주세요.'
+                
+                return render(request, 'upload/FileUploadError.html', error_str)
+            
+            else :
+                base_dir = os.path.dirname(os.path.abspath(__file__)) # 현재 base 위치 지정
+                model_path = os.path.join(base_dir, 'model', model_mode) #  model 불러오기 -> 모델은 upload/model/내에 있음!
+                model = YOLO(model_path) # 모델 실행
+                return StreamingHttpResponse(func(video, model), content_type='multipart/x-mixed-replace; boundary=frame')
+        
         except KeyError :
-            return render(request, 'upload/noFileUpload.html')
+            error_str['title'] = 'No File Upload Error'
+            error_str['content'] = '업로드 할 파일을 선택해주세요.'
+            
+            return render(request, 'upload/FileUploadError.html', error_str)
+        
         except ValueError :
-            return render(request, 'upload/videoValueError.html')
+            error_str['title'] = 'Invalid Video Upload Error'
+            error_str['content'] = '유효하지 않은 영상입니다.'
+            
+            return render(request, 'upload/FileUploadError.html', error_str)
+        
     return render(request, 'upload/uploadWork.html')
 
 # --- 업로드 ---
