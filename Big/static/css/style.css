@@ -597,8 +597,7 @@ a {
 
 /*** About ***/
 .about-img {
-    position: relative;
-    overflow: hidden;
+    background: url(../img/bg-about-img.png) top left no-repeat;
 }
 
 .about-img::after {
@@ -608,7 +607,6 @@ a {
     height: 100%;
     top: 0;
     left: 0;
-    background: url(../img/bg-about-img.png) top left no-repeat;
     background-size: contain;
 }
 
@@ -681,7 +679,7 @@ a {
 
 /*** Feature ***/
 .feature {
-    background: url(../img/bg-hero.png) center center no-repeat;
+    background: url(../img/bg-feature.jpg) center center no-repeat;
     background-size: cover;
 }
 

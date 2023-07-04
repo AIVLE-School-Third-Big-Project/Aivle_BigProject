@@ -24,18 +24,25 @@
         {% if content %}
           <pre>{{ content }}</pre>
         {% else %}
+
           {% for item in file_list %}
-            {% if item.is_dir %}
-                {% if folder_path == '' %}
-                    <a href="{% url 'videoLog' pathes=item.name %}">{{ item.name }}</a><br>
-                {% else %}
-                    <a href="{% url 'videoLog' pathes=folder_path|add:'/'|add:item.name %}">{{ item.name }}</a><br>
-                {% endif %}
-            {% else %}
-                {% if folder_path == '' %}
-                    <a href="{% url 'videoLog' pathes=item.name %}">{{ item.name }}</a><br>
-                {% else %}
-                    <a href="{% url 'videoLog' pathes=folder_path|add:'/'|add:item.name %}">{{ item.name }}</a><br>
+
+            {% if item.name != 'dum' %} <!-- dum 폴더 제외 -->
+            
+                {% if item.is_dir %} <!-- 디렉토리 -->
+                    {% if folder_path == ''  %}
+                        <a href="{% url 'videoLog' pathes=item.name %}">{{ item.name }}</a><br>
+                    {% else %}
+                        <a href="{% url 'videoLog' pathes=folder_path|add:'/'|add:item.name %}">{{ item.name }}</a><br>
+                    {% endif %}
+
+                {% else %} <!-- 일반파일 -->
+                    {% if folder_path == '' %}
+                        <a href="{% url 'videoLog' pathes=item.name %}">{{ item.name }}</a><br>
+                    {% else %}
+                        <a href="{% url 'videoLog' pathes=folder_path|add:'/'|add:item.name %}">{{ item.name }}</a><br>
+                    {% endif %}
+
                 {% endif %}
             {% endif %}
           {% endfor %}

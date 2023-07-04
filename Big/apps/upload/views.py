@@ -1,9 +1,9 @@
-import os, cv2, json, sys, os
+import os, cv2, json, sys, os,shutil
 import numpy as np
 import logging
 
-from django.http import StreamingHttpResponse
-from django.shortcuts import render
+from django.http import StreamingHttpResponse,HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.conf import settings
 from .forms import VideoForm
 from ultralytics import YOLO
@@ -12,6 +12,9 @@ from datetime import datetime, timedelta
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 from collections import Counter, deque
+
+# 추가 정재훈
+from moviepy.editor import *
 
 form = VideoForm()
 form_data = { 'form': form }
@@ -63,13 +66,20 @@ def uploadInSubmit(request):
 
 def uploadWorkSubmit(request):
     if request.method == 'POST':
+        mode = request.POST.get('model_selector', 'ppe')
+        if mode == 'fallen':
+            model_mode = 'fall.pt'
+            func = generate_frames_Fall
+        elif mode == 'ppe':
+            model_mode = 'ppe.pt'
+            func = generate_frames_Work
        
         try :
             video = request.FILES['files[]'] # 비디오 파일 불러오기
             base_dir = os.path.dirname(os.path.abspath(__file__)) # 현재 base 위치 지정
-            model_path = os.path.join(base_dir, 'model', 'ppe.pt') #  model 불러오기 -> 모델은 upload/model/내에 있음!
+            model_path = os.path.join(base_dir, 'model', model_mode) #  model 불러오기 -> 모델은 upload/model/내에 있음!
             model = YOLO(model_path) # 모델 실행
-            return StreamingHttpResponse(generate_frames_Work(video, model), content_type='multipart/x-mixed-replace; boundary=frame')
+            return StreamingHttpResponse(func(video, model), content_type='multipart/x-mixed-replace; boundary=frame')
         except KeyError :
             return render(request, 'upload/noFileUpload.html')
         except ValueError :
@@ -85,32 +95,42 @@ def generate_frames_internal(video, model):
     if not os.path.exists(log_directory):
         os.makedirs(log_directory)
         
-    # 영상 이름 뒤 숫자 지정 ------------------------------------------------ 김유민
+    # 영상 이름 뒤 숫자 지정 ------------------------------------------------ 김유민, 이근섭
     number_fire = 0 # 날짜 영상저장 번호        
-    while os.path.exists(f'{settings.STATICFILES_DIRS[0]}/videoLog/fire/{datetime.now().strftime("%Y-%m-%d")}/fire-{datetime.now().strftime("%Y-%m-%d")}-{number_fire}.mp4') :
+    save_path = f"{settings.STATICFILES_DIRS[0]}/videoLog/fire/{datetime.now().strftime('%Y-%m-%d')}/"
+
+    data_name = f"fire-{datetime.now().strftime('%Y-%m-%d')}-{number_fire}" #저장되려고하는 영상 이름
+    while os.path.exists(f"{save_path}/{data_name}.mp4") :
         number_fire+=1
-    
-    
+        data_name = f"fire-{datetime.now().strftime('%Y-%m-%d')}-{number_fire}" #저장되려고하는 영상 이름
+    ## 로직 구현을 위해서 위치 이동 -- 정재훈
     # 국사 내부 로그 경로 : 클래스-날짜-넘버.log
-    text_log_path = log_directory + f'fire-{datetime.now().strftime("%Y-%m-%d")}-{number_fire}.log'
+    # text_log_path = log_directory + f'{data_name}.log'
+    
         
     cap = cv2.VideoCapture(video.temporary_file_path()) # 영상 지정
     frame_height = int(cap.get(4))
     frame_width = int(cap.get(3))
 
-    # video writer 설정
+    ## video writer 설정 -------------------------------------------------- 정재훈, 이근섭
+    videoMetaData = VideoFileClip(video.temporary_file_path())
     codec = cv2.VideoWriter_fourcc(*'mp4v')
-    fps = 30.0
-    frame_size = (640, 480)
-    vid_num = 0
+    fps = int(cap.get(cv2.CAP_PROP_FPS)) # 자동으로 적용되게 수정
+    frame_size = videoMetaData.size #자동으로 적용되게 수정
+    total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
     flag = 0
-    
+    frameCurrent = 0
+    # 국사 내부 로그 경로 : 클래스-날짜-넘버_fps_(파일의fps).log
+    text_log_path = log_directory + f"{data_name}.log"
 
     # 전체 영상 저장
-    os.makedirs(f"{settings.STATICFILES_DIRS[0]}/videoLog/fire/{datetime.now().strftime('%Y-%m-%d')}/", exist_ok= True)
-    output_all_file = f"{settings.STATICFILES_DIRS[0]}/videoLog/fire/{datetime.now().strftime('%Y-%m-%d')}/fire-{datetime.now().strftime('%Y-%m-%d')}-{number_fire}.mp4"
+    
+    # dummy 폴더에 작성
+    dummy_path = f"{save_path}/dum/"
+    os.makedirs(f"{dummy_path}", exist_ok= True)
+    output_all_file = f"{dummy_path}/{data_name}.mp4"
     all_video_writer = cv2.VideoWriter(output_all_file, codec, fps, frame_size)
-
+    
     # 영상 폴더 지정 ------------------------------------------------ 김유민
     noramlize_check_size = 3
     fire_check  = deque(maxlen= noramlize_check_size) #영상 정확성? 체크
@@ -118,7 +138,9 @@ def generate_frames_internal(video, model):
     frame_count = 0
     fire_check_name = 'fire'
     smoke_check_name = 'smoke'
+    count = 0
     while cap.isOpened():
+        count += 1
         frame_in_fire = 0 # 프레임에 워커가 있는지 확인
         frame_in_smoke = 0
         ret, frame = cap.read() # 영상 프레임 읽기
@@ -157,7 +179,7 @@ def generate_frames_internal(video, model):
 
                 # 로그 파일 작성
                 with open(text_log_path, "a") as file:
-                        file.write(f"{times_check} {label}\n")
+                        file.write(f"{times_check} {label} {frameCurrent}\n") # 정재훈 수정 -- framecurrent 추가
             
 
         all_video_writer.write(frame_predicted)
@@ -171,8 +193,17 @@ def generate_frames_internal(video, model):
 
         if flag == 1:
             frame_count += 1
-     
+        frameCurrent += 1 ## 현재 프레임 연산 -------- 정재훈
+    
     all_video_writer.release()
+    cap.release()
+    cv2.destroyAllWindows()
+    clip = VideoFileClip(output_all_file)
+    file_path =f"{save_path}/{data_name}.mp4"
+    clip.write_videofile(f"{file_path}", codec="libx264", fps=24)
+    shutil.rmtree(dummy_path, ignore_errors=True)
+    print("clear")
+        
 
 
 # 국사 외부 영상 추출 ------------------------------------------------- !human 이근섭
@@ -193,28 +224,35 @@ def generate_frames_external(video, model):
     
     # 영상 폴더 지정 ------------------------------------------------ 김유민
     number_human = 0 # 날짜 영상저장 번호        
-    while os.path.exists(f'{settings.STATICFILES_DIRS[0]}/videoLog/human/{datetime.now().strftime("%Y-%m-%d")}/human-{datetime.now().strftime("%Y-%m-%d")}-{number_human}.mp4') :
+    save_path = f"{settings.STATICFILES_DIRS[0]}/videoLog/human/{datetime.now().strftime('%Y-%m-%d')}/"
+
+    data_name = f"human-{datetime.now().strftime('%Y-%m-%d')}-{number_human}" #저장되려고하는 영상 이름
+    while os.path.exists(f"{save_path}/{data_name}.mp4") :
         number_human+=1
+        data_name = f"human-{datetime.now().strftime('%Y-%m-%d')}-{number_human}" #저장되려고하는 영상 이름
         
-    # 국사 외부 로그 경로 : 클래스-날짜-넘버.log
-    text_log_path = log_directory + f'human-{datetime.now().strftime("%Y-%m-%d")}-{number_human}.log'
+    # 국사 외부 로그 경로 : 클래스-날짜-넘버_fps_(파일의fps).log
+    text_log_path = log_directory + f"{data_name}.log"
+
     
     cap = cv2.VideoCapture(video.temporary_file_path()) # 영상 지정
     frame_height = int(cap.get(4))
     frame_width = int(cap.get(3))
     
-    # video writer 설정
+    ## video writer 설정 -------------------------------------------------- 정재훈 수정
+    videoMetaData = VideoFileClip(video.temporary_file_path())
     codec = cv2.VideoWriter_fourcc(*'mp4v')
-    fps = 30.0
-    frame_size = (640, 480)
-    vid_num = 0
+    fps = int(round(videoMetaData.fps)) # 수정
+    frame_size = videoMetaData.size #수정
     flag = 0
-    save_time = 5
+    frameCurrent = 0
     
     
     # 전체 영상 저장
-    os.makedirs(f"{settings.STATICFILES_DIRS[0]}/videoLog/human/{datetime.now().strftime('%Y-%m-%d')}/", exist_ok= True)
-    output_all_file = f"{settings.STATICFILES_DIRS[0]}/videoLog/human/{datetime.now().strftime('%Y-%m-%d')}/human-{datetime.now().strftime('%Y-%m-%d')}-{number_human}.mp4"
+    # dummy 폴더에 작성
+    dummy_path = f"{save_path}/dum/"
+    os.makedirs(f"{dummy_path}", exist_ok= True)
+    output_all_file = f"{dummy_path}/{data_name}.mp4"
     all_video_writer = cv2.VideoWriter(output_all_file, codec, fps, frame_size)
 
     # 영상 폴더 지정 ------------------------------------------------ 김유민
@@ -285,7 +323,8 @@ def generate_frames_external(video, model):
                 
                 # 로그 파일 작성
                 with open(text_log_path, "a") as file:
-                    file.write(f"{times_check} {label} {count}명\n")
+                    file.write(f"{times_check} {label} {count}명 {frameCurrent}\n") # 정재훈 수정 -- framecurrent 추가
+                    
 
 
         # 영상 저장 중..
@@ -300,8 +339,17 @@ def generate_frames_external(video, model):
         # 영상 저장
         if flag == 1:
             frame_count += 1    
+        # 현재 프레임 연산 -------------------------- 정재훈
+        frameCurrent += 1
+        # ----------------------------------------- 정재훈
+
     all_video_writer.release()
-                
+    cap.release()
+    cv2.destroyAllWindows()
+    clip = VideoFileClip(output_all_file)
+    file_path =f"{save_path}/{data_name}.mp4"
+    clip.write_videofile(f"{file_path}", codec="libx264", fps=24)
+    shutil.rmtree(dummy_path, ignore_errors=True)
                 
 # 작업자 안전 영상 추출 ------------------------------------------------- !ppe 이근섭
 def generate_frames_Work(video, model):
@@ -312,26 +360,32 @@ def generate_frames_Work(video, model):
     
     # 영상 폴더 지정 ------------------------------------------------ 김유민
     number_ppe = 0 # 날짜 영상저장 번호        
-    while os.path.exists(f'{settings.STATICFILES_DIRS[0]}/videoLog/ppe/{datetime.now().strftime("%Y-%m-%d")}/ppe-{datetime.now().strftime("%Y-%m-%d")}-{number_ppe}.mp4') :
+    save_path = f"{settings.STATICFILES_DIRS[0]}/videoLog/ppe/{datetime.now().strftime('%Y-%m-%d')}/"
+
+    data_name = f"ppe-{datetime.now().strftime('%Y-%m-%d')}-{number_ppe}" #저장되려고하는 영상 이름
+    while os.path.exists(f"{save_path}/{data_name}.mp4") :
         number_ppe+=1
+        data_name = f"ppe-{datetime.now().strftime('%Y-%m-%d')}-{number_ppe}" #저장되려고하는 영상 이름
+
         
     # 작업 안전 로그 경로 : 클래스-날짜-넘버.log
-    text_log_path = log_directory + f'ppe-{datetime.now().strftime("%Y-%m-%d")}-{number_ppe}.log'
+    text_log_path = log_directory + f"ppe-{datetime.now().strftime('%Y-%m-%d')}-{number_ppe}.log"
     
     cap = cv2.VideoCapture(video.temporary_file_path()) # 영상 지정
-    frame_height = int(cap.get(4))
-    frame_width = int(cap.get(3))
 
-    # video writer 설정
+    ## video writer 설정 -------------------------------------------------- 정재훈 수정
+    videoMetaData = VideoFileClip(video.temporary_file_path())
     codec = cv2.VideoWriter_fourcc(*'mp4v')
-    fps = 30.0
-    frame_size = (640, 480)
+    fps = int(round(videoMetaData.fps)) # 수정
+    frame_size = videoMetaData.size #수정
     vid_num = 0
     flag = 0
-
-    # 전체 영상 저장
-    os.makedirs(f"{settings.STATICFILES_DIRS[0]}/videoLog/ppe/{datetime.now().strftime('%Y-%m-%d')}/", exist_ok= True)
-    output_all_file = f"{settings.STATICFILES_DIRS[0]}/videoLog/ppe/{datetime.now().strftime('%Y-%m-%d')}/ppe-{datetime.now().strftime('%Y-%m-%d')}-{number_ppe}.mp4"
+    frameCurrent = 0
+    
+    # dummy 폴더에 작성
+    dummy_path = f"{save_path}/dum/"
+    os.makedirs(f"{dummy_path}", exist_ok= True)
+    output_all_file = f"{dummy_path}/{data_name}.mp4"
     all_video_writer = cv2.VideoWriter(output_all_file, codec, fps, frame_size)
 
     # 영상 정확성 체크 ------------------------------------------------ 김유민
@@ -395,9 +449,10 @@ def generate_frames_Work(video, model):
 
                 # 로그 파일 작성
                 with open(text_log_path, "a") as file:
-                    file.write(f"{times_check} {label}\n")
-
-            
+                    file.write(f"{times_check} {label} {frameCurrent}\n") # 정재훈 수정 -- framecurrent 추가
+                    
+        # 영상 저장 중..
+        all_video_writer.write(frame_predicted)
         # 영상 저장 중..
         _, jpeg_frame = cv2.imencode('.jpg', frame_predicted) # cv2.imshow가 안되기 때문에 대체하였음
         frame_bytes = jpeg_frame.tobytes()
@@ -408,4 +463,120 @@ def generate_frames_Work(video, model):
         # 영상 저장
         if flag == 1:
             frame_count += 1    
+            
+        # 현재 프레임 연산 -------------------------- 정재훈
+        frameCurrent += 1
+        # ----------------------------------------- 정재훈
     all_video_writer.release()
+    cap.release()
+    cv2.destroyAllWindows()
+    clip = VideoFileClip(output_all_file)
+    file_path =f"{save_path}/{data_name}.mp4"
+    clip.write_videofile(f"{file_path}", codec="libx264", fps=24)
+    shutil.rmtree(dummy_path, ignore_errors=True)
+
+
+
+# 작업자 추락사고 영상 추출 ------------------------------------------------- !fall 이근섭
+def generate_frames_Fall(video, model):
+    
+    log_directory = 'log/'
+    if not os.path.exists(log_directory):
+        os.makedirs(log_directory)
+    
+    # 영상 폴더 지정 ------------------------------------------------ 김유민
+    number_ppe = 0 # 날짜 영상저장 번호        
+    save_path = f"{settings.STATICFILES_DIRS[0]}/videoLog/ppe/{datetime.now().strftime('%Y-%m-%d')}/"
+
+    data_name = f"ppe-{datetime.now().strftime('%Y-%m-%d')}-{number_ppe}" #저장되려고하는 영상 이름
+    while os.path.exists(f"{save_path}/{data_name}.mp4") :
+        number_ppe+=1
+        data_name = f"ppe-{datetime.now().strftime('%Y-%m-%d')}-{number_ppe}" #저장되려고하는 영상 이름
+
+        
+    # 작업 안전 로그 경로 : 클래스-날짜-넘버.log
+    text_log_path = log_directory + f"{data_name}.log"
+    
+    cap = cv2.VideoCapture(video.temporary_file_path()) # 영상 지정
+
+    ## video writer 설정 -------------------------------------------------- 정재훈 수정
+    videoMetaData = VideoFileClip(video.temporary_file_path())
+    codec = cv2.VideoWriter_fourcc(*'mp4v')
+    fps = int(round(videoMetaData.fps)) # 수정
+    frame_size = videoMetaData.size #수정
+    flag = 0
+    frameCurrent = 0
+    
+    # dummy 폴더에 작성
+    dummy_path = f"{save_path}/dum/"
+    os.makedirs(f"{dummy_path}", exist_ok= True)
+    output_all_file = f"{dummy_path}/{data_name}.mp4"
+    all_video_writer = cv2.VideoWriter(output_all_file, codec, fps, frame_size)
+
+    # 영상 정확성 체크 ------------------------------------------------ 김유민
+    noramlize_check_size = 11
+    fall_check = deque(maxlen= noramlize_check_size) #영상 정확성? 체크
+
+    frame_count = 0
+    fall_check_name = 'fallen'
+
+    while cap.isOpened():
+        frame_check_fall = None
+        frame_in_fall = 0
+        
+        ret, frame = cap.read() # 영상 프레임 읽기
+        if not ret: #영상 재생이 안될 경우 break
+            break
+        frame = cv2.resize(frame, frame_size)
+        # 모델 실행 및 프레임 처리
+        results = model.predict(frame,verbose = False, iou = 0.7 )[0] # 모델을 예측함 ; 예측률 70% 이상이 아니면 예측 continue#conf = 0.7
+        frame_predicted = results.plot(prob = False, conf = False) # model numpy로 가져옴 #model size와 같음
+        
+
+        ################## 영상 log 남김!! #########################
+        now_time = datetime.now()
+        arr = results.boxes.cls.cpu().numpy()
+        if len(arr) > 0 :
+            class_counts = np.vectorize(results.names.get)(arr)
+
+            if fall_check_name in class_counts:
+                frame_in_fall = fall_check_name
+
+        fall_check.append(frame_in_fall) 
+
+        if fall_check.count('fallen') == noramlize_check_size:
+            frame_check_fall = "fallen"
+
+        # 사건 발생 및 발생 영상 저장 위치 지정
+        if (frame_check_fall == 'fallen') and (flag == 0):
+            for label in class_counts:
+                if label == 'fallen':
+                    times_check = now_time.strftime('%Y-%m-%d %H:%M:%S')
+
+                    # 로그 파일 작성
+                    with open(text_log_path, "a") as file:
+                        file.write(f"{times_check} {label} {frameCurrent}\n") # 정재훈 수정 -- framecurrent 추가
+                        
+        # 영상 저장 중..
+        all_video_writer.write(frame_predicted)
+        # 영상 저장 중..
+        _, jpeg_frame = cv2.imencode('.jpg', frame_predicted) # cv2.imshow가 안되기 때문에 대체하였음
+        frame_bytes = jpeg_frame.tobytes()
+
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n\r\n')
+        
+        # 영상 저장
+        if flag == 1:
+            frame_count += 1    
+            
+        # 현재 프레임 연산 -------------------------- 정재훈
+        frameCurrent += 1
+        # ----------------------------------------- 정재훈
+    all_video_writer.release()
+    cap.release()
+    cv2.destroyAllWindows()
+    clip = VideoFileClip(output_all_file)
+    file_path =f"{save_path}/{data_name}.mp4"
+    clip.write_videofile(f"{file_path}", codec="libx264", fps=24)
+    shutil.rmtree(dummy_path, ignore_errors=True)

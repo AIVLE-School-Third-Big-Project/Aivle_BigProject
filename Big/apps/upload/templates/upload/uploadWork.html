@@ -27,6 +27,11 @@
             <div class="col-md-6 mt-5">
                 <div class="bg-white p-5 rounded shadow-sm border">
                     <form method="post" enctype="multipart/form-data" action="{% url 'uploadWorkSubmit' %}">
+                        <p>모델 선택</p>
+                        <select name="model_selector" id="model_selector">
+                            <option value="ppe">작업자 보호장비</option>
+                            <option value="fallen">추락사고</option>
+                        </select>
                         {% csrf_token %}
                         <div class="dropzone d-block">
                             <label for="files" class="dropzone-container">
