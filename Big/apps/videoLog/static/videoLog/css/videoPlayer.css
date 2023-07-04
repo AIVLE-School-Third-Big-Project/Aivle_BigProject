@@ -1,0 +1,58 @@
+.video-box{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.video-box video {
+    width: 50%;
+}
+
+.log-box {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    width: 20%;
+}
+
+.title {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.log-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.log-list {
+    display: flex;
+    flex-direction: column;
+    max-height: 400px;
+    min-width: 300px;
+    overflow: scroll;
+}
+
+.log-title {
+    margin-bottom: 20px;
+}
+
+.time {
+    cursor: pointer;
+    padding: 10px 0;
+}
+.time:hover{
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.local {
+    color: rgb(189, 56, 216);
+}
+
+.event {
+    color: red;
+}

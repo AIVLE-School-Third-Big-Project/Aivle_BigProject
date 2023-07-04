@@ -44,9 +44,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    
     # Big Project MiddleWare
     'apps.sessionManagement.views.CheckSessionExpiryMiddleware', # 세션 매니저
-] #"django.middleware.csrf.CsrfViewMiddleware",
+]
 
 ROOT_URLCONF = "Big.urls"
 

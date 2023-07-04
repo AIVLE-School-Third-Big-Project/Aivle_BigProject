@@ -179,7 +179,7 @@ def generate_frames_internal(video, model):
 
                 # 로그 파일 작성
                 with open(text_log_path, "a") as file:
-                        file.write(f"{times_check} {label} {frameCurrent}\n") # 정재훈 수정 -- framecurrent 추가
+                        file.write(f"{times_check} {frameCurrent} {label}\n") # 정재훈 수정 -- framecurrent 추가
             
 
         all_video_writer.write(frame_predicted)
@@ -323,7 +323,7 @@ def generate_frames_external(video, model):
                 
                 # 로그 파일 작성
                 with open(text_log_path, "a") as file:
-                    file.write(f"{times_check} {label} {count}명 {frameCurrent}\n") # 정재훈 수정 -- framecurrent 추가
+                    file.write(f"{times_check} {frameCurrent} {label} {count}명\n") # 정재훈 수정 -- framecurrent 추가
                     
 
 
@@ -449,7 +449,7 @@ def generate_frames_Work(video, model):
 
                 # 로그 파일 작성
                 with open(text_log_path, "a") as file:
-                    file.write(f"{times_check} {label} {frameCurrent}\n") # 정재훈 수정 -- framecurrent 추가
+                    file.write(f"{times_check} {frameCurrent} {label}\n") # 정재훈 수정 -- framecurrent 추가
                     
         # 영상 저장 중..
         all_video_writer.write(frame_predicted)

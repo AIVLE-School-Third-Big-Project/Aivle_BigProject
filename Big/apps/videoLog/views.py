@@ -22,8 +22,19 @@ def videoLog(request, pathes=''):
             if os.path.isfile(log_file_name):
                     with open(log_file_name, 'r') as file:
                         content = file.read()
-                        
-            return render(request, 'videoLog/videoLogPlayer.html', { 'folder_path' : folder_path, 'content' : content})
+                        content = content.split('\n')
+                        texts = []
+                        for text in content :
+                            tt = text.split(' ')
+
+                            if len(tt) >= 4 :
+                                day = tt[0]
+                                time = tt[1]
+                                fps = tt[2]
+                                event = tt[3]
+                                texts.append({'day':day,'event':event,'local':time ,'fps':round(int(fps)/24)})
+
+            return render(request, 'videoLog/videoLogPlayer.html', { 'folder_path' : folder_path, 'content' : texts})
               
 
     else:

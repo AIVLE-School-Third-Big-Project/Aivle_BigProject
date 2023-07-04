@@ -6,7 +6,7 @@
 
 {% block body %}
 {% load static %}
-
+    <link rel="stylesheet" type="text/css" href="{% static 'videoLog/css/videoPlayer.css' %}">
     <!-- Hero Start -->
     <div class="container-fluid pt-5 bg-primary hero-header">
         <div class="container pt-5">
@@ -21,15 +21,25 @@
     <!-- Hero End -->
     <div>
         {% load static %}
-        <video controls class="viewer">
-            <source src="{% static folder_path %}" type="video/mp4">
-        </video>
-    </div>
-    <div>
-        {% if content %}
-          <pre>{{ content }}</pre>
-        {% endif %}
+        <div class="video-box">
+            <video controls class="viewer">
+                <source src="{% static folder_path %}" type="video/mp4">
+            </video>
+            <div class='log-box'>
+                <div class='log-inner'>
+                    <h2 class='title'>이벤트 로그</h2>
+                    <div class='log-list'>
+                        {% if content %}
+                            {% for item in content %}
+                                <p class='logItem'>{{item.day}} <span class='local'>{{item.local}}</span><span class='time'> {{ item.fps }}초</span> <span class='event'>{{ item.event }}</span>
+                                </p>
+                            {% endfor %}
+                        {% endif %} 
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
       
-
+    <script src="{% static 'videoLog/js/videoLogPlayer.js' %}"></script>
 {% endblock %}

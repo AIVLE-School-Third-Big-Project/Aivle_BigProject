@@ -1,8 +1,46 @@
+.main-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.log-box {
+    display: flex;
+    justify-content: space-around;
+    margin: 0 auto;
+    width: 1080px;
+    padding: 20px;
+    flex-wrap : wrap;
+    margin-bottom: 30px;
+}
+
+.log-box a {
+    /* background-color: aquamarine; */
+    width: 30%;
+    padding: 50px;
+    margin: 10px;
+    border: 2px solid #d1d1d1;
+    border-radius: 30px;
+
+    background-image: url("https://cdn.pixabay.com/photo/2018/02/08/02/06/background-3138516_640.jpg");
+    color: rgb(8, 8, 8);
+    font-weight: bold;
+    background-size: cover; /* 이미지를 컨테이너에 맞게 조절 */
+    background-repeat: no-repeat; /* 이미지 반복 없음 */
+    background-position: center; /* 이미지를 가운데 정렬 */
+    transition: transform 0.3s ease;
+}
+
+.log-box a:hover {
+    transform: scale(1.05); /* 이미지를 1.2배 확대 */
+  }
+
 .menu_bar {
-    margin-top: 30px;
     display: flex;
     justify-content: center;
 }
+
 
 .select_board{
     display: flex;
@@ -19,7 +57,6 @@
     color: #fff;
 }
 
-/*----------------------------------------------------------------------menu*/
 
 .menu {
     border: none;
@@ -62,6 +99,7 @@
     -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
     transform: translateX(-9%) translateY(-25%) rotate(45deg);
   }
+  
   
 /* 3 */
 button {

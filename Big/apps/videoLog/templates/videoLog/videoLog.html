@@ -6,7 +6,7 @@
 
 {% block body %}
 {% load static %}
-
+    <link rel="stylesheet" type="text/css" href="{% static 'videoLog/css/videoLog.css' %}">
     <!-- Hero Start -->
     <div class="container-fluid pt-5 bg-primary hero-header">
         <div class="container pt-5">
@@ -19,34 +19,44 @@
         </div>
     </div>
     <!-- Hero End -->
+    <div class='main-box'>
+        <div class="menu_bar">
+        <!--announcement.html = 공지사항.html-->
+            <ul class="select_board">
+                <li><a href="{% url 'workLog' %}"><button class="custom-btn btn-3"><span>작업일지</span></button></a></li>
+                <li><a href="{% url 'videoLog' %}"><button class="custom-btn btn-3"><span>영상로그</span></button></a></li>
+            </ul>
+        </div>
+        <div class='log-box'>
+            {% if content %}
+                <pre>{{ content }}</pre>
+            {% else %}
 
-    <div>
-        {% if content %}
-          <pre>{{ content }}</pre>
-        {% else %}
+                {% for item in file_list %}
 
-          {% for item in file_list %}
+                {% if item.name != 'dum' %} <!-- dum 폴더 제외 -->
+                
+                    {% if item.is_dir %} <!-- 디렉토리 -->
+                        {% if folder_path == ''  %}
+                            <a href="{% url 'videoLog' pathes=item.name %}">{{ item.name }}</a><br>
+                        {% else %}
+                            <a href="{% url 'videoLog' pathes=folder_path|add:'/'|add:item.name %}">{{ item.name }}</a><br>
+                        {% endif %}
 
-            {% if item.name != 'dum' %} <!-- dum 폴더 제외 -->
-            
-                {% if item.is_dir %} <!-- 디렉토리 -->
-                    {% if folder_path == ''  %}
-                        <a href="{% url 'videoLog' pathes=item.name %}">{{ item.name }}</a><br>
-                    {% else %}
-                        <a href="{% url 'videoLog' pathes=folder_path|add:'/'|add:item.name %}">{{ item.name }}</a><br>
+                    {% else %} <!-- 일반파일 -->
+                        {% if folder_path == '' %}
+                            <a href="{% url 'videoLog' pathes=item.name %}">{{ item.name }}</a><br>
+                        {% else %}
+                            <a href="{% url 'videoLog' pathes=folder_path|add:'/'|add:item.name %}">{{ item.name }}</a><br>
+                        {% endif %}
+
                     {% endif %}
-
-                {% else %} <!-- 일반파일 -->
-                    {% if folder_path == '' %}
-                        <a href="{% url 'videoLog' pathes=item.name %}">{{ item.name }}</a><br>
-                    {% else %}
-                        <a href="{% url 'videoLog' pathes=folder_path|add:'/'|add:item.name %}">{{ item.name }}</a><br>
-                    {% endif %}
-
                 {% endif %}
+                {% endfor %}
             {% endif %}
-          {% endfor %}
-        {% endif %}
+        </div>
+
+
     </div>
 
 {% endblock %}
